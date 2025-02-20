@@ -6,6 +6,23 @@ void error(char *msg, int len)
 	exit(EXIT_SUCCESS);
 }
 
+/*
+	新しい構造体を作成する
+*/
+t_list *new_val(int val)
+{
+	t_list *new;
+
+	new = malloc(sizeof(t_list));
+	new->val = val;
+	new->next = NULL;
+
+	return (new);
+}
+
+/*
+	パラメタで指定された数字を読み込む
+*/
 t_list *read_args(int argc, char **argv)
 {
 	ssize_t	cnt;
@@ -19,9 +36,8 @@ t_list *read_args(int argc, char **argv)
 	while (cnt < argc)
 	{
 		printf("argc[cnt]:%s\n", argv[cnt]);
-		new = malloc(sizeof(t_list));
-		new->val = ft_atoi(argv[cnt]);
-		new->next = NULL;
+		// if(ft_isdigit(argv[cnt]))
+		new = new_val(ft_atoi(argv[cnt]));
 		if (!ret)
 			ret = new;
 		else
@@ -45,6 +61,8 @@ void free_list(t_list **list)
 	}
 }
 
+
+
 int main(int argc, char **argv)
 {
 	t_list *a;
@@ -56,4 +74,5 @@ int main(int argc, char **argv)
 	printf("a->val:%d", a->val);
 	printf("OK?\n");
 	free_list(&a);
+	free_list(&b);
 }

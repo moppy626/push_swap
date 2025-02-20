@@ -1,6 +1,7 @@
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
+#include "libft/libft.h"
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -12,4 +13,3 @@ typedef struct s_list{
 }	t_list;
 #endif
 
-int	ft_atoi(const char *str);
