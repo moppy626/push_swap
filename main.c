@@ -1,5 +1,8 @@
 #include "push_swap.h"
 
+/*
+	エラーメッセージを出力して処理を終了する
+*/
 void error(char *msg, int len)
 {
 	write(1, msg, len);
@@ -36,7 +39,6 @@ t_list *read_args(int argc, char **argv)
 	while (cnt < argc)
 	{
 		printf("argc[cnt]:%s\n", argv[cnt]);
-		// if(ft_isdigit(argv[cnt]))
 		new = new_val(ft_atoi(argv[cnt]));
 		if (!ret)
 			ret = new;
@@ -48,6 +50,9 @@ t_list *read_args(int argc, char **argv)
 	return (ret);
 }
 
+/*
+	リストを初期化する
+*/
 void free_list(t_list **list)
 {
 	t_list *tmp;
