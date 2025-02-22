@@ -11,5 +11,11 @@ typedef struct s_list{
 	int		val;
 	struct s_list	*next;
 }	t_list;
+
+void	s(t_list **list);
+void	p(t_list **from, t_list **to);
+void	r(t_list **list);
+void	rr(t_list **list);
+
 #endif
 

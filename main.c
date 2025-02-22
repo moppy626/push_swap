@@ -57,6 +57,8 @@ void free_list(t_list **list)
 {
 	t_list *tmp;
 
+	if (!list)
+		return ;
 	while (*list)
 	{
 		printf("list->val:%d\n", (*list)->val);
@@ -66,8 +68,9 @@ void free_list(t_list **list)
 	}
 }
 
-
-
+/*
+	メイン関数
+*/
 int main(int argc, char **argv)
 {
 	t_list *a;
@@ -76,8 +79,13 @@ int main(int argc, char **argv)
 	if (argc <= 1)
 		error("Error\nAt least one more argument is required.\n", 46);
 	a = read_args(argc, argv);
-	printf("a->val:%d", a->val);
-	printf("OK?\n");
+	b = NULL;
+	p(&a, &b);
+	p(&a, &b);
+	p(&a, &b);
+	p(&a, &b);
+	printf("a\n");
 	free_list(&a);
+	printf("b\n");
 	free_list(&b);
 }
