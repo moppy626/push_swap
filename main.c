@@ -48,6 +48,8 @@ t_list *read_args(int argc, char **argv)
 		tmp = new;
 		cnt++;
 	}
+	ret->prev = tmp;
+	tmp->next = ret;
 	return (ret);
 }
 
@@ -57,16 +59,20 @@ t_list *read_args(int argc, char **argv)
 void free_list(t_list **list)
 {
 	t_list *tmp;
+	t_list *head;
 
 	if (!list)
 		return ;
-	while (*list)
+	head = *list;
+	*list = (*list)->next;
+	while (head != *list)
 	{
 		printf("list->val:%d\n", (*list)->val);
 		tmp = *list;
 		*list = (*list)->next;
 		free(tmp);
 	}
+	free(head);
 }
 
 /*
@@ -77,18 +83,35 @@ void	calculation_cost(t_list **a, t_list **b)
 	ssize_t cost_a;
 	ssize_t cost_b;
 	t_list *temp;
+	t_list *last;
 
+	cost_a = 0;
+	cost_b = 0;
+	last = (*a);
+	while (last->next)
+		last = last->next;
 	temp = (*b);
-	while ((*a)->val > temp->val)
+	while (temp)
 	{
+		if((*a)->val > temp->val)
+			cost_a++;
+		// if(last->val > temp->val)
+		// 	cost_b++;
 		temp = temp->next;
-		cost_a++;
 	}
-
-	
-
-
-
+	cost_b++;
+	printf("cost_a:%ld\n",cost_a);
+	printf("cost_b:%ld\n",cost_b);
+	temp = (*b);
+	// if (cost_a < cost_b)
+		while((*a)->val > (*b)->val)
+			r(b);
+	// else
+	// {
+	// 	rr(a);
+	// 	while((*a)->val > (*b)->val)
+	// 		r(b);
+	// }
 	p(a, b);
 }
 
@@ -110,6 +133,16 @@ int main(int argc, char **argv)
 	// 	r(&b);
 	// while (a)
 	// 	calculation_cost(&a, &b);
+
+	// t_list *temp;
+	// temp = a;
+	// while(temp->next)
+	// 	temp = temp->next;
+	// while(temp)
+	// {
+	// 	printf("a->val=%d\n", temp->val);
+	// 	temp = temp->prev;
+	// }
 	printf("a\n");
 	free_list(&a);
 	printf("b\n");

@@ -11,7 +11,10 @@ void	s(t_list **list)
 		return ;
 	temp = (*list)->next;
 	(*list)->next = temp->next;
-	temp->next = (*list);
+	(*list)->prev = temp;
+	temp->next->prev = *list;
+	temp->next = *list;
+	temp->prev = NULL;
 	(*list) = temp;
 }
 
@@ -25,7 +28,10 @@ void	p(t_list **from, t_list **to)
 	if (!from || !(*from))
 		return ;
 	temp = *from;
+	temp->prev = NULL;
 	*from = (*from)->next;
+	if (*from)
+		(*from)->prev = NULL;
 	if (!to || !(*to))
 	{
 		*to = temp;
@@ -33,6 +39,7 @@ void	p(t_list **from, t_list **to)
 	}
 	else
 	{
+		(*to)->prev = temp;
 		temp->next = *to;
 		*to = temp;
 	}
@@ -57,6 +64,8 @@ void	r(t_list **list)
 		last = last->next;
 	last->next = temp;
 	temp->next = NULL;
+	temp->prev = last;
+	(*list)->prev = NULL;
 }
 
 /*
@@ -75,6 +84,8 @@ void	rr(t_list **list)
 	temp = *list;
 	while(temp->next != last)
 		temp = temp->next;
+	(*list)->prev = last;
+	last->prev = NULL;
 	last->next = *list;
 	temp->next = NULL;
 	*list = last;
