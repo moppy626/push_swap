@@ -59,20 +59,21 @@ t_list *read_args(int argc, char **argv)
 void free_list(t_list **list)
 {
 	t_list *tmp;
-	t_list *head;
+	t_list *last;
 
-	if (!list)
+	if (!list || !*list)
 		return ;
-	head = *list;
-	*list = (*list)->next;
-	while (head != *list)
+		last = (*list)->prev;
+	*list = *list;
+	while (last != *list)
 	{
 		printf("list->val:%d\n", (*list)->val);
 		tmp = *list;
 		*list = (*list)->next;
 		free(tmp);
 	}
-	free(head);
+	printf("list->val:%d\n", last->val);
+	free(last);
 }
 
 /*
@@ -127,7 +128,7 @@ int main(int argc, char **argv)
 		error("Error\nAt least one more argument is required.\n", 46);
 	a = read_args(argc, argv);
 	b = NULL;
-	// p(&a, &b);
+	p(&a, &b);
 	// p(&a, &b);
 	// if (b->val > b->next->val)
 	// 	r(&b);
