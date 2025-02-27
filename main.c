@@ -128,7 +128,7 @@ int main(int argc, char **argv)
 		error("Error\nAt least one more argument is required.\n", 46);
 	a = read_args(argc, argv);
 	b = NULL;
-	p(&a, &b);
+	s(&a);
 	// p(&a, &b);
 	// if (b->val > b->next->val)
 	// 	r(&b);
