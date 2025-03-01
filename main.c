@@ -81,39 +81,30 @@ void free_list(t_list **list)
 */
 void	calculation_cost(t_list **a, t_list **b)
 {
-	ssize_t cost_a;
-	ssize_t cost_b;
-	t_list *temp;
-	t_list *last;
+	ssize_t	cost_r;
+	ssize_t	cost_l;
+	t_list	*temp_r;
+	t_list	*temp_l;
 
-	cost_a = 0;
-	cost_b = 0;
-	last = (*a);
-	while (last->next)
-		last = last->next;
-	temp = (*b);
-	while (temp)
+	cost_r = 0;
+	temp_r = *b;
+	while (!(temp_r->prev->val < (*a)->val && (*a)->val < temp_r->val))
 	{
-		if((*a)->val > temp->val)
-			cost_a++;
-		// if(last->val > temp->val)
-		// 	cost_b++;
-		temp = temp->next;
+		printf("(*a)->val:%d\n", (*a)->val);
+		printf("temp_r->prev->val:%d\n", temp_r->prev->val);
+		printf("temp_r->val:%d\n",temp_r->val);
+		temp_r = temp_r->next;
+		cost_r++;
 	}
-	cost_b++;
-	printf("cost_a:%ld\n",cost_a);
-	printf("cost_b:%ld\n",cost_b);
-	temp = (*b);
-	// if (cost_a < cost_b)
-		while((*a)->val > (*b)->val)
-			r(b);
-	// else
+	// cost_l = 0;
+	// temp_l = *a;
+	// while (!(temp_l->prev->val < (*b)->val && (*b)->val < temp_l->val))
 	// {
-	// 	rr(a);
-	// 	while((*a)->val > (*b)->val)
-	// 		r(b);
+	// 	temp_l = temp_l->prev;
+	// 	cost_l++;
 	// }
-	p(a, b);
+	// printf("cost_r:%ld, cost_l:%ld\n",cost_r,cost_l);
+	// p(a, b);
 }
 
 /*
@@ -130,10 +121,10 @@ int main(int argc, char **argv)
 	b = NULL;
 	p(&a, &b);
 	p(&a, &b);
-	// if (b->val > b->next->val)
-	// 	r(&b);
+	if (b->val > b->next->val)
+		r(&b);
 	// while (a)
-	// 	calculation_cost(&a, &b);
+		calculation_cost(&a, &b);
 
 	// t_list *temp;
 	// temp = a;
