@@ -76,37 +76,131 @@ void free_list(t_list **list)
 	free(last);
 }
 
-/*
-	コスト計算
-*/
-void	calculation_cost(t_list **a, t_list **b)
+t_list	*get(t_list	*temp ,int mode)
 {
-	ssize_t	cost_r;
-	ssize_t	cost_l;
-	t_list	*temp_r;
-	t_list	*temp_l;
-
-	cost_r = 0;
-	temp_r = *b;
-	while (!(temp_r->prev->val < (*a)->val && (*a)->val < temp_r->val))
-	{
-		printf("(*a)->val:%d\n", (*a)->val);
-		printf("temp_r->prev->val:%d\n", temp_r->prev->val);
-		printf("temp_r->val:%d\n",temp_r->val);
-		temp_r = temp_r->next;
-		cost_r++;
-	}
-	// cost_l = 0;
-	// temp_l = *a;
-	// while (!(temp_l->prev->val < (*b)->val && (*b)->val < temp_l->val))
-	// {
-	// 	temp_l = temp_l->prev;
-	// 	cost_l++;
-	// }
-	// printf("cost_r:%ld, cost_l:%ld\n",cost_r,cost_l);
-	// p(a, b);
+	if (mode % 2 == 0)
+		return temp->next;
+	else
+		return temp->prev;
 }
 
+/*
+	コスト計算
+	mode0⇒Aの先頭がチェック対象・B右回転
+	mode1⇒Aの先頭がチェック対象・B左回転
+	mode2⇒Aの最後がチェック対象・B右回転
+	mode3⇒Aの最後がチェック対象・B左回転
+*/
+ssize_t	cost(t_list **a, t_list **b, t_status *stat, int mode)
+{
+	ssize_t cost;
+	t_list	*temp;
+	int		val;
+
+	cost = 0;
+	temp = *b;
+	if (mode >= 2)
+		val = (*a)->prev->val;
+	else
+		val = (*a)->val;
+
+	if (val < stat->b_min || stat->b_max < val)
+		while (temp->val != stat->b_max)
+		{
+			temp = get(temp, mode);
+			cost++;
+		}
+	else
+		while (!(temp->val < val && val < temp->prev->val))
+		{
+			temp = get(temp, mode);
+			cost++;
+		}
+	// if (!(mode == 3 && cost > 1))
+	// 	cost++;
+	return (++cost);
+}
+
+/*
+	対象の数字を移動する
+*/
+void	move(t_list **a, t_list **b, t_status *stat, int mode)
+{
+	// if (stat->tu == 'u' && stat->r == 2 && cost > 1)
+	// 	rrr(a, b);
+	if (mode >= 2)
+		rr(a);
+	if ((*a)->val < stat->b_min || stat->b_max < (*a)->val)
+		while ((*b)->val != stat->b_max)
+			if (mode % 2 == 0)
+				r(b);
+			else
+				rr(b);
+	else
+		while (!((*b)->val < (*a)->val && (*a)->val < (*b)->prev->val))
+			if (mode % 2 == 0)
+				r(b);
+			else
+				rr(b);
+	p(a, b, stat);
+}
+/*
+	スタックAの先頭もしくは一番後ろで
+	一番コストの低いものを調べて移動する
+*/
+void	calculate_cost(t_list **a, t_list **b, t_status *stat)
+{
+	ssize_t		costs[4];
+	int			idx;
+	int			min;
+
+	costs[0] = cost(a, b, stat, 0);
+	costs[1] = cost(a, b, stat, 1);
+	costs[2] = cost(a, b, stat, 2);
+	costs[3] = cost(a, b, stat, 3);
+	idx = 0;
+	min = 0;
+	while (idx < 4)
+	{
+		if (costs[idx] < costs[min])
+			min = idx;
+		idx++;
+	}
+	// printf ("costs[0]:%ld,costs[1]:%ld,costs[2]:%ld,costs[3]:%ld\n",costs[0],costs[1],costs[2],costs[3]);
+	move(a, b, stat, min);
+
+}
+/*
+	スタックBに入っているデータをスタックAに戻す
+*/
+int shift_to_stack(t_list **a, t_list **b, t_status *stat)
+{
+	t_list	*temp;
+	ssize_t	rcost;
+	ssize_t rrcost;
+
+	rcost = 0;
+	temp = *b;
+	while (temp->val != stat->b_max)
+	{
+		temp = temp->next;
+		rcost++;
+	}
+	rrcost = 0;
+	temp = *b;
+	while (temp->val != stat->b_max)
+	{
+		temp = temp->prev;
+		rrcost++;
+	}
+	while ((*b)->val != stat->b_max)
+		if (rcost < rrcost)
+			r(b);
+		else
+			rr(b);
+	while (*b)
+		p(b, a, stat);
+}
 /*
 	メイン関数
 */
@@ -114,27 +208,22 @@ int main(int argc, char **argv)
 {
 	t_list *a;
 	t_list *b;
+	t_status stat;
 
 	if (argc <= 1)
 		error("Error\nAt least one more argument is required.\n", 46);
 	a = read_args(argc, argv);
 	b = NULL;
-	p(&a, &b);
-	p(&a, &b);
-	if (b->val > b->next->val)
+	stat.b_max = 0;
+	stat.b_min = 0;
+	p(&a, &b, &stat);
+	p(&a, &b, &stat);
+	if (b->val < b->next->val)
 		r(&b);
-	// while (a)
-		calculation_cost(&a, &b);
+	while (a)
+		calculate_cost(&a, &b, &stat);
+	shift_to_stack(&a, &b, &stat);
 
-	// t_list *temp;
-	// temp = a;
-	// while(temp->next)
-	// 	temp = temp->next;
-	// while(temp)
-	// {
-	// 	printf("a->val=%d\n", temp->val);
-	// 	temp = temp->prev;
-	// }
 	printf("a\n");
 	free_list(&a);
 	printf("b\n");

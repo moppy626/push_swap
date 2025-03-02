@@ -22,40 +22,8 @@ void	s(t_list **list)
 	temp->next = *list;
 	*list = temp;
 }
-
 /*
-	pa・pb処理を実施します
-*/
-void	p(t_list **from, t_list **to)
-{
-	t_list	*temp;
-
-	temp = *from;
-	if (*from == (*from)->next)
-		*from = NULL;
-	else
-	{
-		(*from)->next->prev = (*from)->prev;
-		(*from)->prev->next = (*from)->next;
-		*from = (*from)->next;
-	}
-	if (!*to)
-	{
-		temp->prev = temp;
-		temp->next = temp; 
-	}
-	else
-	{
-		temp->prev = (*to)->prev;
-		temp->next = *to;
-		(*to)->prev->next = temp;
-		(*to)->prev = temp;
-	}
-	*to = temp;
-}
-
-/*
-	ra・rb・rr処理を実施します
+	ra・rb処理を実施します
 */
 void	r(t_list **list)
 {
@@ -78,4 +46,14 @@ void	rr(t_list **list)
 		return ;
 	temp = (*list)->prev;
 	*list = temp;
+
+}
+
+/*
+	rrr処理を実施します
+*/
+void	rrr(t_list **a, t_list **b)
+{
+	rr(a);
+	rr(b);
 }
