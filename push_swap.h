@@ -12,11 +12,16 @@ typedef struct s_list{
 	int		val;
 	struct s_list	*next;
 }	t_list;
+typedef struct s_status{
+	int		b_max;
+	int		b_min;
+}	t_status;
 
 void	s(t_list **list);
-void	p(t_list **from, t_list **to);
+void	p(t_list **from, t_list **to, t_status *stat);
 void	r(t_list **list);
 void	rr(t_list **list);
+void	rrr(t_list **a, t_list **b);
 
 #endif
 
