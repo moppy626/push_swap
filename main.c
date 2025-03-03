@@ -1,5 +1,27 @@
 #include "push_swap.h"
 
+void test(t_list **a, t_list **b)
+{
+	t_list *temp;
+
+	temp = *a;
+	printf("a: ");
+	while ((*a)->prev != temp)
+	{
+		printf("%d ", temp->val);
+		temp = temp->next;
+	}
+	printf("%d ", temp->val);
+	temp = *b;
+	printf("/ b: ");
+	while ((*b)->prev != temp)
+	{
+		printf("%d ", temp->val);
+		temp = temp->next;
+	}
+	printf("%d ", temp->val);
+	printf("\n");
+}
 /*
 	エラーメッセージを出力して処理を終了する
 */
@@ -39,7 +61,7 @@ t_list *read_args(int argc, char **argv)
 	tmp = ret;
 	while (cnt < argc)
 	{
-		printf("argc[cnt]:%s\n", argv[cnt]);
+		// printf("argc[cnt]:%s\n", argv[cnt]);
 		new = new_val(ft_atoi(argv[cnt]), tmp);
 		if (!ret)
 			ret = new;
@@ -67,109 +89,15 @@ void free_list(t_list **list)
 	*list = *list;
 	while (last != *list)
 	{
-		printf("list->val:%d\n", (*list)->val);
+		// printf("list->val:%d\n", (*list)->val);
 		tmp = *list;
 		*list = (*list)->next;
 		free(tmp);
 	}
-	printf("list->val:%d\n", last->val);
+	// printf("list->val:%d\n", last->val);
 	free(last);
 }
 
-t_list	*get(t_list	*temp ,int mode)
-{
-	if (mode % 2 == 0)
-		return temp->next;
-	else
-		return temp->prev;
-}
-
-/*
-	コスト計算
-	mode0⇒Aの先頭がチェック対象・B右回転
-	mode1⇒Aの先頭がチェック対象・B左回転
-	mode2⇒Aの最後がチェック対象・B右回転
-	mode3⇒Aの最後がチェック対象・B左回転
-*/
-ssize_t	cost(t_list **a, t_list **b, t_status *stat, int mode)
-{
-	ssize_t cost;
-	t_list	*temp;
-	int		val;
-
-	cost = 0;
-	temp = *b;
-	if (mode >= 2)
-		val = (*a)->prev->val;
-	else
-		val = (*a)->val;
-
-	if (val < stat->b_min || stat->b_max < val)
-		while (temp->val != stat->b_max)
-		{
-			temp = get(temp, mode);
-			cost++;
-		}
-	else
-		while (!(temp->val < val && val < temp->prev->val))
-		{
-			temp = get(temp, mode);
-			cost++;
-		}
-	// if (!(mode == 3 && cost > 1))
-	// 	cost++;
-	return (++cost);
-}
-
-/*
-	対象の数字を移動する
-*/
-void	move(t_list **a, t_list **b, t_status *stat, int mode)
-{
-	// if (stat->tu == 'u' && stat->r == 2 && cost > 1)
-	// 	rrr(a, b);
-	if (mode >= 2)
-		rr(a);
-	if ((*a)->val < stat->b_min || stat->b_max < (*a)->val)
-		while ((*b)->val != stat->b_max)
-			if (mode % 2 == 0)
-				r(b);
-			else
-				rr(b);
-	else
-		while (!((*b)->val < (*a)->val && (*a)->val < (*b)->prev->val))
-			if (mode % 2 == 0)
-				r(b);
-			else
-				rr(b);
-	p(a, b, stat);
-}
-/*
-	スタックAの先頭もしくは一番後ろで
-	一番コストの低いものを調べて移動する
-*/
-void	calculate_cost(t_list **a, t_list **b, t_status *stat)
-{
-	ssize_t		costs[4];
-	int			idx;
-	int			min;
-
-	costs[0] = cost(a, b, stat, 0);
-	costs[1] = cost(a, b, stat, 1);
-	costs[2] = cost(a, b, stat, 2);
-	costs[3] = cost(a, b, stat, 3);
-	idx = 0;
-	min = 0;
-	while (idx < 4)
-	{
-		if (costs[idx] < costs[min])
-			min = idx;
-		idx++;
-	}
-	// printf ("costs[0]:%ld,costs[1]:%ld,costs[2]:%ld,costs[3]:%ld\n",costs[0],costs[1],costs[2],costs[3]);
-	move(a, b, stat, min);
-
-}
 /*
 	スタックBに入っているデータをスタックAに戻す
 */
@@ -195,11 +123,41 @@ int shift_to_stack(t_list **a, t_list **b, t_status *stat)
 	}
 	while ((*b)->val != stat->b_max)
 		if (rcost < rrcost)
-			r(b);
+			r(b, 'b');
 		else
-			rr(b);
+			rr(b, 'b');
 	while (*b)
-		p(b, a, stat);
+		p(a, b, stat, 'a');
+}
+
+/*
+	コスト計算
+	mode0⇒Aの先頭がチェック対象・B上回転
+	mode1⇒Aの先頭がチェック対象・B下回転
+	mode2⇒Aの最後がチェック対象・B上回転
+	mode3⇒Aの最後がチェック対象・B下回転
+*/
+ssize_t	cost(t_list **a, t_list **b, t_status *stat, int mode)
+{
+
+}
+
+/*
+	対象の数字を移動する
+*/
+void	move(t_list **a, t_list **b, t_status *stat, int mode)
+{
+
+	p(a, b, stat, 'b');
+}
+/*
+	スタックAの先頭もしくは一番後ろで
+	一番コストの低いものを調べて移動する
+*/
+void	calculate_cost(t_list **a, t_list **b, t_status *stat)
+{
+
+	move(a, b, stat, 0);
 }
 /*
 	メイン関数
@@ -214,18 +172,17 @@ int main(int argc, char **argv)
 		error("Error\nAt least one more argument is required.\n", 46);
 	a = read_args(argc, argv);
 	b = NULL;
+	stat.a_size = argc;
 	stat.b_max = 0;
 	stat.b_min = 0;
-	p(&a, &b, &stat);
-	p(&a, &b, &stat);
+	p(&a, &b, &stat, 'b');
+	p(&a, &b, &stat, 'b');
+	test(&a, &b);
 	if (b->val < b->next->val)
-		r(&b);
+		r(&b, 'b');
 	while (a)
 		calculate_cost(&a, &b, &stat);
 	shift_to_stack(&a, &b, &stat);
-
-	printf("a\n");
 	free_list(&a);
-	printf("b\n");
 	free_list(&b);
 }
