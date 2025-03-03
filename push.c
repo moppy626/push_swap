@@ -7,10 +7,8 @@ void	upd_stat(int val, t_status *stat)
 	if (stat->b_min == 0 || stat->b_min > val)
 		stat->b_min = val;
 }
-/*
-	pa・pb処理を実施します
-*/
-void	p(t_list **from, t_list **to, t_status *stat)
+
+void	p_src(t_list **from, t_list **to, t_status *stat)
 {
 	t_list	*temp;
 
@@ -38,6 +36,22 @@ void	p(t_list **from, t_list **to, t_status *stat)
 	}
 	*to = temp;
 }
+
+/*
+	pa・pb処理を実施します
+*/
+void	p(t_list **a, t_list **b, t_status *stat, char target)
+{
+	if (target == 'b')
+	{
+		p_src(a, b, stat);
+		stat->a_size--;
+	}
+	else
+		p_src(b, a, stat);
+	ft_printf("p%c\n", target);
+}
+
 
 
 

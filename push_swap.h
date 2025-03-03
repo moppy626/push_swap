@@ -2,6 +2,7 @@
 # define PUSH_SWAP_H
 
 #include "libft/libft.h"
+#include "ft_printf/ft_printf.h"
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -15,12 +16,13 @@ typedef struct s_list{
 typedef struct s_status{
 	int		b_max;
 	int		b_min;
+	ssize_t	a_size;
 }	t_status;
 
-void	s(t_list **list);
-void	p(t_list **from, t_list **to, t_status *stat);
-void	r(t_list **list);
-void	rr(t_list **list);
+void	s(t_list **list, char target);
+void	p(t_list **a, t_list **b, t_status *stat, char target);
+void	r(t_list **list, char target);
+void	rr(t_list **list, char target);
 void	rrr(t_list **a, t_list **b);
 
 #endif
