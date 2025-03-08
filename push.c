@@ -48,7 +48,10 @@ void	p(t_list **a, t_list **b, t_status *stat, char target)
 		stat->a_size--;
 	}
 	else
+	{
 		p_src(b, a, stat);
+		stat->a_size++;
+	}
 	ft_printf("p%c\n", target);
 }
 
