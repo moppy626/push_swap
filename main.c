@@ -132,10 +132,7 @@ int shift_to_stack(t_list **a, t_list **b, t_status *stat)
 
 /*
 	コスト計算
-	mode0⇒Aの先頭がチェック対象・B上回転
-	mode1⇒Aの先頭がチェック対象・B下回転
-	mode2⇒Aの最後がチェック対象・B上回転
-	mode3⇒Aの最後がチェック対象・B下回転
+	
 */
 ssize_t	cost(t_list **a, t_list **b, t_status *stat, int mode)
 {
@@ -147,7 +144,6 @@ ssize_t	cost(t_list **a, t_list **b, t_status *stat, int mode)
 */
 void	move(t_list **a, t_list **b, t_status *stat, int mode)
 {
-
 	p(a, b, stat, 'b');
 }
 /*
@@ -156,7 +152,16 @@ void	move(t_list **a, t_list **b, t_status *stat, int mode)
 */
 void	calculate_cost(t_list **a, t_list **b, t_status *stat)
 {
+	int cost_list[stat->a_size][2];
+	ssize_t	idx;
 
+	idx = 0;
+	while (idx < stat->a_size)
+	{
+		cost_list[idx][UP] = cost(a, b, stat, UP);
+		cost_list[idx][DOWN] = cost(a, b, stat, DOWN);
+		idx++;
+	}
 	move(a, b, stat, 0);
 }
 /*
@@ -182,7 +187,7 @@ int main(int argc, char **argv)
 		r(&b, 'b');
 	while (a)
 		calculate_cost(&a, &b, &stat);
-	shift_to_stack(&a, &b, &stat);
+	// shift_to_stack(&a, &b, &stat);
 	free_list(&a);
 	free_list(&b);
 }

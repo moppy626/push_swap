@@ -8,6 +8,9 @@
 
 #include <stdio.h>
 
+# define UP	  0
+# define DOWN 1
+
 typedef struct s_list{
 	struct s_list	*prev;
 	int		val;
