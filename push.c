@@ -12,6 +12,8 @@ void	p_src(t_list **from, t_list **to, t_status *stat)
 {
 	t_list	*temp;
 
+    // if (!*from || *from == *to) 
+    //     return;
 	upd_stat((*from)->val, stat);
 	temp = *from;
 	if (*from == (*from)->next)

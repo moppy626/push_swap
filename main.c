@@ -4,22 +4,28 @@ void test(t_list **a, t_list **b)
 {
 	t_list *temp;
 
-	temp = *a;
 	printf("a: ");
-	while ((*a)->prev != temp)
+	temp = *a;
+	if (*a)
 	{
+		while ((*a)->prev != temp)
+		{
+			printf("%d ", temp->val);
+			temp = temp->next;
+		}
 		printf("%d ", temp->val);
-		temp = temp->next;
 	}
-	printf("%d ", temp->val);
-	temp = *b;
 	printf("/ b: ");
-	while ((*b)->prev != temp)
+	if (*b)
 	{
+		temp = *b;
+		while ((*b)->prev != temp)
+		{
+			printf("%d ", temp->val);
+			temp = temp->next;
+		}
 		printf("%d ", temp->val);
-		temp = temp->next;
 	}
-	printf("%d ", temp->val);
 	printf("\n");
 }
 /*
@@ -98,71 +104,46 @@ void free_list(t_list **list)
 	free(last);
 }
 
-/*
-	スタックBに入っているデータをスタックAに戻す
-*/
-int shift_to_stack(t_list **a, t_list **b, t_status *stat)
+int get_stack_size(t_list **list)
 {
-	t_list	*temp;
-	ssize_t	rcost;
-	ssize_t rrcost;
+	t_list *temp;
+	int ret;
 
-	rcost = 0;
-	temp = *b;
-	while (temp->val != stat->b_max)
+	ret = 0;
+	temp = *list;
+	while(temp->prev != *list)
 	{
+		ret++;
 		temp = temp->next;
-		rcost++;
 	}
-	rrcost = 0;
-	temp = *b;
-	while (temp->val != stat->b_max)
+	return ++ret;
+}
+
+/*
+	クイックソートする
+*/
+void	quick_sort(t_list **a, t_list **b, t_status *stat)
+{
+	int pivot;
+	int len;
+
+	if (!*a)
+		return;
+	pivot = (*a)->val;
+	len = get_stack_size(a);
+
+	while (len--)
 	{
-		temp = temp->prev;
-		rrcost++;
-	}
-	while ((*b)->val != stat->b_max)
-		if (rcost < rrcost)
-			r(b, 'b');
+		// printf("(*a)->val:%d\n", (*a)->val);
+		if ((*a)->val < pivot)
+			p(a, b, stat, 'b');
 		else
-			rr(b, 'b');
+			r(a, 'a');
+	}
 	while (*b)
 		p(a, b, stat, 'a');
-}
-
-/*
-	コスト計算
-	
-*/
-ssize_t	cost(t_list **a, t_list **b, t_status *stat, int mode)
-{
-
-}
-
-/*
-	対象の数字を移動する
-*/
-void	move(t_list **a, t_list **b, t_status *stat, int mode)
-{
-	p(a, b, stat, 'b');
-}
-/*
-	スタックAの先頭もしくは一番後ろで
-	一番コストの低いものを調べて移動する
-*/
-void	calculate_cost(t_list **a, t_list **b, t_status *stat)
-{
-	int cost_list[stat->a_size][2];
-	ssize_t	idx;
-
-	idx = 0;
-	while (idx < stat->a_size)
-	{
-		cost_list[idx][UP] = cost(a, b, stat, UP);
-		cost_list[idx][DOWN] = cost(a, b, stat, DOWN);
-		idx++;
-	}
-	move(a, b, stat, 0);
+	test(a,b);
+	quick_sort(a, b, stat);
 }
 /*
 	メイン関数
@@ -180,13 +161,7 @@ int main(int argc, char **argv)
 	stat.a_size = argc;
 	stat.b_max = 0;
 	stat.b_min = 0;
-	p(&a, &b, &stat, 'b');
-	p(&a, &b, &stat, 'b');
-	test(&a, &b);
-	if (b->val < b->next->val)
-		r(&b, 'b');
-	while (a)
-		calculate_cost(&a, &b, &stat);
+	quick_sort(&a, &b, &stat);
 	// shift_to_stack(&a, &b, &stat);
 	free_list(&a);
 	free_list(&b);
