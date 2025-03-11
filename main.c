@@ -118,31 +118,49 @@ int get_stack_size(t_list **list)
 	}
 	return ++ret;
 }
+void push_a_to_b(t_list **a, t_list **b, t_status *stat)
+{
+	t_list	*pivot;
+	t_list	*temp;
+	size_t	len;
+	size_t	i;
+
+	len = get_stack_size(a);
+	pivot = *a;
+	p(a, b, stat, 'b'); // ピボットをBに移動
+
+	i = 0;
+	while (i++ < len - 1)
+	{
+		temp = *a;
+		if (temp->val < pivot->val)
+			p(a, b, stat, 'b'); // 小さいものはBの前方
+		else
+		{
+			r(a, 'a'); // 大きいものは後方
+			p(a, b, stat, 'b');
+			r(b, 'b'); // Bを回転させ後方に配置
+		}
+	}
+
+	// BをAに戻す
+	while (*b)
+	{
+		if ((*b)->val < pivot->val)
+			rr(b, 'b');
+		p(b, a, stat, 'a');
+	}
+}
 
 /*
 	クイックソートする
 */
 void	quick_sort(t_list **a, t_list **b, t_status *stat)
 {
-	int pivot;
-	int len;
-
-	if (!*a)
-		return;
-	pivot = (*a)->val;
-	len = get_stack_size(a);
-
-	while (len--)
-	{
-		// printf("(*a)->val:%d\n", (*a)->val);
-		if ((*a)->val < pivot)
-			p(a, b, stat, 'b');
-		else
-			r(a, 'a');
-	}
-	while (*b)
-		p(a, b, stat, 'a');
-	test(a,b);
+	if (get_stack_size(a) <= 1)
+		return ;
+	push_a_to_b(a, b, stat);
+	quick_sort(a, b, stat);
 	quick_sort(a, b, stat);
 }
 /*
