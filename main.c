@@ -103,66 +103,26 @@ void free_list(t_list **list)
 	// printf("list->val:%d\n", last->val);
 	free(last);
 }
-
+/*
+	スタックの大きさを取得する
+*/
 int get_stack_size(t_list **list)
 {
 	t_list *temp;
 	int ret;
 
+	if (!*list)
+		return (0);
 	ret = 0;
 	temp = *list;
-	while(temp->prev != *list)
+	while(temp->next != *list)
 	{
 		ret++;
 		temp = temp->next;
 	}
 	return ++ret;
 }
-void push_a_to_b(t_list **a, t_list **b, t_status *stat)
-{
-	t_list	*pivot;
-	t_list	*temp;
-	size_t	len;
-	size_t	i;
 
-	len = get_stack_size(a);
-	pivot = *a;
-	p(a, b, stat, 'b'); // ピボットをBに移動
-
-	i = 0;
-	while (i++ < len - 1)
-	{
-		temp = *a;
-		if (temp->val < pivot->val)
-			p(a, b, stat, 'b'); // 小さいものはBの前方
-		else
-		{
-			r(a, 'a'); // 大きいものは後方
-			p(a, b, stat, 'b');
-			r(b, 'b'); // Bを回転させ後方に配置
-		}
-	}
-
-	// BをAに戻す
-	while (*b)
-	{
-		if ((*b)->val < pivot->val)
-			rr(b, 'b');
-		p(b, a, stat, 'a');
-	}
-}
-
-/*
-	クイックソートする
-*/
-void	quick_sort(t_list **a, t_list **b, t_status *stat)
-{
-	if (get_stack_size(a) <= 1)
-		return ;
-	push_a_to_b(a, b, stat);
-	quick_sort(a, b, stat);
-	quick_sort(a, b, stat);
-}
 /*
 	メイン関数
 */
@@ -179,8 +139,6 @@ int main(int argc, char **argv)
 	stat.a_size = argc;
 	stat.b_max = 0;
 	stat.b_min = 0;
-	quick_sort(&a, &b, &stat);
-	// shift_to_stack(&a, &b, &stat);
 	free_list(&a);
 	free_list(&b);
 }
