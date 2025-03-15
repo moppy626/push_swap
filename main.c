@@ -136,8 +136,6 @@ int main(int argc, char **argv)
 		error("Error\nAt least one more argument is required.\n", 46);
 	a = read_args(argc, argv);
 	b = NULL;
-	printf("get_stack_size_a:%d\n",get_stack_size(&a));
-	printf("get_stack_size_b:%d\n",get_stack_size(&b));
 	stat.a_size = argc;
 	stat.b_max = 0;
 	stat.b_min = 0;
