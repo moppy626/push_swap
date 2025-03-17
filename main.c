@@ -106,7 +106,7 @@ void free_list(t_list **list)
 /*
 	スタックの大きさを取得する
 */
-int get_stack_size(t_list **list)
+ssize_t get_stack_size(t_list **list)
 {
 	t_list *temp;
 	int ret;
@@ -122,7 +122,65 @@ int get_stack_size(t_list **list)
 	}
 	return ++ret;
 }
+/*
+	リストの中央値を取得
+*/
+void sort(int	ary[], ssize_t from, ssize_t to)
+{
+	ssize_t low;
+	ssize_t high;
+	int		temp;
 
+	// printf("from=%ld, to=%ld\n", from, to);
+	if(from >= to)
+		return ;
+	low = from;
+	high = to;
+	while (1)
+	{
+		while(ary[low] < ary[from])
+			low++;
+		while (ary[high] > ary[from])
+			high--;
+		if (low >= high)
+			break ;
+		temp = ary[high];
+		ary[high] = ary[low];
+		ary[low] = temp;
+		low++;
+		high--;
+	}
+	sort(ary, from, low - 1);
+	sort(ary, high + 1, to);
+}
+
+/*
+	リストの中央値を取得
+*/
+int find_median(t_list **list, ssize_t size)
+{
+	t_list *temp;
+	ssize_t idx;
+	int	ary[size];
+
+	if (!*list)
+		return (0);
+	idx = 0;
+	temp = *list;
+	while(temp->next != *list)
+	{
+		ary[idx] = temp->val;
+		temp = temp->next;
+		idx++;
+	}
+	ary[idx] = temp->val;
+	sort(ary, 0, size - 1);
+	idx = 0;
+	while(idx<size)
+		printf("%d,", ary[idx++]);
+	printf("\n");
+	return (ary[size / 2]);
+}
 /*
 	メイン関数
 */
@@ -136,6 +194,7 @@ int main(int argc, char **argv)
 		error("Error\nAt least one more argument is required.\n", 46);
 	a = read_args(argc, argv);
 	b = NULL;
+	printf("median:%d\n", find_median(&a,get_stack_size(&a)));
 	stat.a_size = argc;
 	stat.b_max = 0;
 	stat.b_min = 0;
