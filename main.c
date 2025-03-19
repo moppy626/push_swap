@@ -125,7 +125,7 @@ ssize_t get_stack_size(t_list **list)
 /*
 	リストの中央値を取得
 */
-void sort(int	ary[], ssize_t from, ssize_t to)
+void sort_median(int	ary[], ssize_t from, ssize_t to)
 {
 	ssize_t low;
 	ssize_t high;
@@ -150,8 +150,8 @@ void sort(int	ary[], ssize_t from, ssize_t to)
 		low++;
 		high--;
 	}
-	sort(ary, from, low - 1);
-	sort(ary, high + 1, to);
+	sort_median(ary, from, low - 1);
+	sort_median(ary, high + 1, to);
 }
 
 /*
@@ -174,13 +174,34 @@ int find_median(t_list **list, ssize_t size)
 		idx++;
 	}
 	ary[idx] = temp->val;
-	sort(ary, 0, size - 1);
+	sort_median(ary, 0, size - 1);
 	idx = 0;
 	while(idx<size)
 		printf("%d,", ary[idx++]);
 	printf("\n");
 	return (ary[size / 2]);
 }
+
+/*
+	中央値以下のデータを移動する
+*/
+void move_under_median(t_list **from, t_list **to, t_status *stat, char target)
+{
+	int median;
+	t_list *temp;
+
+	median = find_median(from, get_stack_size(from));
+	temp = *from;
+	while(temp->next != *from)
+	{
+		if (temp->val < median)
+			p(from, to, stat, target);
+		temp = temp->next;
+	}
+	if (temp->val < median)
+		p(from, to, stat, target);
+}
+
 /*
 	メイン関数
 */
@@ -194,7 +215,8 @@ int main(int argc, char **argv)
 		error("Error\nAt least one more argument is required.\n", 46);
 	a = read_args(argc, argv);
 	b = NULL;
-	printf("median:%d\n", find_median(&a,get_stack_size(&a)));
+	// printf("median:%d\n", find_median(&a,get_stack_size(&a)));
+	move_under_median(&a, &b, &stat, 'b');
 	stat.a_size = argc;
 	stat.b_max = 0;
 	stat.b_min = 0;
