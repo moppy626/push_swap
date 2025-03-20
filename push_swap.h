@@ -16,17 +16,17 @@ typedef struct s_list{
 	int		val;
 	struct s_list	*next;
 }	t_list;
-typedef struct s_status{
-	int		b_max;
-	int		b_min;
-	ssize_t	a_size;
-}	t_status;
 
-void	s(t_list **list, char target);
-void	p(t_list **a, t_list **b, t_status *stat, char target);
-void	r(t_list **list, char target);
-void	rr(t_list **list, char target);
+typedef struct s_data{
+	struct s_list	*a;
+	int				a_size;
+	struct s_list	*b;
+	int				b_size;
+}	t_data;
+void	r(t_list **list);
+void	s(t_list **list);
+void	rr(t_list **list);
 void	rrr(t_list **a, t_list **b);
-
+void	p(t_list **from, t_list **to);
 #endif
 
