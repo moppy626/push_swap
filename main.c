@@ -1,14 +1,14 @@
 #include "push_swap.h"
 
-void test(t_list **a, t_list **b)
+void test(t_data *data)
 {
 	t_list *temp;
 
 	printf("a: ");
-	temp = *a;
-	if (*a)
+	temp = data->a;
+	if (data->a)
 	{
-		while ((*a)->prev != temp)
+		while ((data->a)->prev != temp)
 		{
 			printf("%d ", temp->val);
 			temp = temp->next;
@@ -16,10 +16,10 @@ void test(t_list **a, t_list **b)
 		printf("%d ", temp->val);
 	}
 	printf("/ b: ");
-	if (*b)
+	if (data->b)
 	{
-		temp = *b;
-		while ((*b)->prev != temp)
+		temp = data->b;
+		while ((data->b)->prev != temp)
 		{
 			printf("%d ", temp->val);
 			temp = temp->next;
@@ -185,21 +185,21 @@ int find_median(t_list **list, ssize_t size)
 /*
 	中央値以下のデータを移動する
 */
-void move_under_median(t_list **from, t_list **to, t_status *stat, char target)
+void move_under_median(t_data *data)
 {
 	int median;
-	t_list *temp;
+	t_list *top;
 
-	median = find_median(from, get_stack_size(from));
-	temp = *from;
-	while(temp->next != *from)
-	{
-		if (temp->val < median)
-			p(from, to, stat, target);
-		temp = temp->next;
-	}
-	if (temp->val < median)
-		p(from, to, stat, target);
+	// median = find_median(from, get_stack_size(from));
+	// top = *from;
+	// p(from, data);
+	// while(top->prev < *from)
+	// {
+	// 	if ((*from)->val < median)
+	// 		p(from, to);
+	// 	printf("top->prev->val=%d,(*from)->val=%d\n", top->prev->val,(*from)->val);
+	// 	r(from);
+	// }
 }
 
 /*
@@ -207,19 +207,16 @@ void move_under_median(t_list **from, t_list **to, t_status *stat, char target)
 */
 int main(int argc, char **argv)
 {
-	t_list *a;
-	t_list *b;
-	t_status stat;
+	t_data data;
 
 	if (argc <= 1)
 		error("Error\nAt least one more argument is required.\n", 46);
-	a = read_args(argc, argv);
-	b = NULL;
-	// printf("median:%d\n", find_median(&a,get_stack_size(&a)));
-	move_under_median(&a, &b, &stat, 'b');
-	stat.a_size = argc;
-	stat.b_max = 0;
-	stat.b_min = 0;
-	free_list(&a);
-	free_list(&b);
+	data.a = read_args(argc, argv);
+	data.a_size = argc;
+	data.b = NULL;
+	data.b_size = 0;
+	// move_under_median(&a, &b, &data);
+	test(&data);
+	free_list(&data.a);
+	free_list(&data.b);
 }
