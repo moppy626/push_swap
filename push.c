@@ -32,9 +32,11 @@ void	p(t_list **from, t_list **to)
 }
 
 
-void pb(t_list **a, t_list **b, t_data *data)
+void pb(t_data *data)
 {
-
+	if(!data->a)
+		return ;
+	p(&data->a, &data->b);
 }
 
 

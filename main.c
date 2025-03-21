@@ -176,30 +176,32 @@ int find_median(t_list **list, ssize_t size)
 	ary[idx] = temp->val;
 	sort_median(ary, 0, size - 1);
 	idx = 0;
-	while(idx<size)
-		printf("%d,", ary[idx++]);
-	printf("\n");
 	return (ary[size / 2]);
 }
 
 /*
-	中央値以下のデータを移動する
+	中央値以下のデータをBスタックに移動する
 */
-void move_under_median(t_data *data)
+void move_b_under_median(t_data *data)
 {
-	int median;
-	t_list *top;
+	int		median;
+	t_list	*top;
+	ssize_t size;
+	ssize_t	idx;
 
-	// median = find_median(from, get_stack_size(from));
-	// top = *from;
-	// p(from, data);
-	// while(top->prev < *from)
-	// {
-	// 	if ((*from)->val < median)
-	// 		p(from, to);
-	// 	printf("top->prev->val=%d,(*from)->val=%d\n", top->prev->val,(*from)->val);
-	// 	r(from);
-	// }
+	size = get_stack_size(&data->a);
+
+	median = find_median(&data->a, size);
+	idx = 0;
+	printf("median=%d\n", median);
+	while (idx < size)
+	{
+		if (data->a->val < median)
+			pb(data);
+		else
+			r(&data->a);
+		idx++;
+	}
 }
 
 /*
@@ -215,7 +217,7 @@ int main(int argc, char **argv)
 	data.a_size = argc;
 	data.b = NULL;
 	data.b_size = 0;
-	// move_under_median(&a, &b, &data);
+	move_b_under_median(&data);
 	test(&data);
 	free_list(&data.a);
 	free_list(&data.b);

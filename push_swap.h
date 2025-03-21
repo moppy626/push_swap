@@ -27,6 +27,6 @@ void	r(t_list **list);
 void	s(t_list **list);
 void	rr(t_list **list);
 void	rrr(t_list **a, t_list **b);
-void	p(t_list **from, t_list **to);
+void pb(t_data *data);
 #endif
 
