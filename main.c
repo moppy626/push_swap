@@ -178,7 +178,10 @@ int find_median(t_list **list, ssize_t size)
 	idx = 0;
 	return (ary[size / 2]);
 }
-
+/*
+	3件以下の値の順番を並び替える
+	
+*/
 /*
 	中央値以下のデータをBスタックに移動する
 */
@@ -203,7 +206,32 @@ void move_b_under_median(t_data *data)
 		idx++;
 	}
 }
-
+/*
+	3件以下のスタックを昇順にソートする
+*/
+void sort_under_three(t_list **list)
+{
+	if ((*list)->next == *list)
+		return ;
+	if((*list)->next->next == *list)
+	{
+		if ((*list)->val > (*list)->next->val)
+			s(list);
+		return ;
+	}
+	if ((*list)->next->next->next == *list)
+	{
+		if ((*list)->next->val > (*list)->val
+		&& (*list)->next->val > (*list)->next->next->val)
+			rr(list);
+		if ((*list)->val > (*list)->next->val
+		&& (*list)->val > (*list)->next->next->val)
+			r(list);
+		if ((*list)->val > (*list)->next->val)
+			s(list);
+		return ;
+	}
+}
 /*
 	メイン関数
 */
@@ -217,7 +245,8 @@ int main(int argc, char **argv)
 	data.a_size = argc;
 	data.b = NULL;
 	data.b_size = 0;
-	move_b_under_median(&data);
+	sort_under_three(&data.a);
+	// move_b_under_median(&data);
 	test(&data);
 	free_list(&data.a);
 	free_list(&data.b);
