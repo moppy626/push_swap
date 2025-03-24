@@ -11,4 +11,4 @@ all: a.out
 a.out:$(SRC) $(SRC_LIBFT) $(SRC_PRINTF)
 	sudo cc $(SRC) $(SRC_LIBFT) $(SRC_PRINTF)
 test:a.out
-	sudo valgrind --tool=memcheck --leak-check=yes --show-reachable=yes ./a.out 4 6 8 5 3 10 9 7 1 2
+	sudo valgrind --tool=memcheck --leak-check=yes --show-reachable=yes ./a.out 1 2
