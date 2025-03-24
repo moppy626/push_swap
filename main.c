@@ -179,10 +179,6 @@ int find_median(t_list **list, ssize_t size)
 	return (ary[size / 2]);
 }
 /*
-	3件以下の値の順番を並び替える
-	
-*/
-/*
 	中央値以下のデータをBスタックに移動する
 */
 void move_b_under_median(t_data *data)
