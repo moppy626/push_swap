@@ -8,8 +8,8 @@
 
 #include <stdio.h>
 
-# define UP	  0
-# define DOWN 1
+# define UNDER  0
+# define OVER 1
 
 typedef struct s_list{
 	struct s_list	*prev;
@@ -19,9 +19,7 @@ typedef struct s_list{
 
 typedef struct s_data{
 	struct s_list	*a;
-	int				a_size;
 	struct s_list	*b;
-	int				b_size;
 }	t_data;
 void	r(t_list **list);
 void	s(t_list **list);
