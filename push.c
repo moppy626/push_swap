@@ -30,7 +30,19 @@ void	p(t_list **from, t_list **to)
 	}
 	*to = temp;
 }
-
+void	push(t_data *data, int mode)
+{
+	if (mode == A)
+	{
+		p(&data->b, &data->a);
+		ft_printf("pa\n");
+	}
+	else
+	{
+		p(&data->a, &data->b);
+		ft_printf("pb\n");
+	}
+}
 
 
 

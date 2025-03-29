@@ -10,6 +10,8 @@
 
 # define UNDER  0
 # define OVER 1
+# define A 0
+# define B 1
 
 typedef struct s_list{
 	struct s_list	*prev;
@@ -25,7 +27,7 @@ void	r(t_list **list);
 void	s(t_list **list);
 void	rr(t_list **list);
 void	rrr(t_list **a, t_list **b);
-void	p(t_list **from, t_list **to);
+void	push(t_data *data, int mode);
 int find_median(t_list **list, ssize_t size);
 #endif
 

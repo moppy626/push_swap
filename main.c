@@ -166,7 +166,7 @@ ssize_t move_b_by_pivot(t_data *data, int mode, int pivot)
 	{
 		if ((mode && data->a->val >= pivot) || (!mode && data->a->val < pivot))
 		{
-			p(&data->a, &data->b);
+			push(data, B);
 			ret++;
 		}
 		else
@@ -190,7 +190,7 @@ ssize_t move_a_by_pivot(t_data *data, int mode, int pivot)
 	{
 		if ((mode && data->b->val >= pivot) || (!mode && data->b->val < pivot))
 		{
-			p(&data->b, &data->a);
+			push(data, A);
 			ret++;
 		}
 		else
@@ -216,7 +216,7 @@ void sort_b(t_data *data)
 		sort_under_three(&data->b);
 		while(data->b)
 		{
-			p(&data->b, &data->a);
+			push(data, A);
 			r(&data->a);
 		}
 		return ;
@@ -225,7 +225,7 @@ void sort_b(t_data *data)
 	save = move_a_by_pivot(data, OVER, median);
 	sort_b(data);
 	while (save--)
-		p(&data->a, &data->b);
+		push(data, B);
 	sort_b(data);
 }
 /*
