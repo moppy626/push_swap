@@ -126,26 +126,28 @@ ssize_t get_stack_size(t_list **list)
 /*
 	3件以下のスタックを昇順にソートする
 */
-void sort_under_three(t_list **list)
+void sort_under_three(t_list **list, ssize_t size, int mode)
 {
-	if ((*list)->next == *list)
+	// printf("size=%ld\n",size);
+	if (size <= 1)
 		return ;
-	if((*list)->next->next == *list)
+	if(size == 2)
 	{
+		// printf("(*list)->val=%d, (*list)->next->val=%d\n", (*list)->val, (*list)->next->val);
 		if ((*list)->val > (*list)->next->val)
-			s(list);
+			swap(list, mode);
 		return ;
 	}
-	if ((*list)->next->next->next == *list)
+	if (size == 3)
 	{
 		if ((*list)->next->val > (*list)->val
 		&& (*list)->next->val > (*list)->next->next->val)
-			rr(list);
+		reverse_rotate(list, mode);
 		if ((*list)->val > (*list)->next->val
 		&& (*list)->val > (*list)->next->next->val)
-			r(list);
+			rotate(list, mode);
 		if ((*list)->val > (*list)->next->val)
-			s(list);
+		swap(list, mode);
 		return ;
 	}
 }
@@ -171,7 +173,7 @@ ssize_t move_b_by_pivot(t_data *data, int mode, int pivot)
 		}
 		else
 		{
-			r(&data->a);
+			rotate(&data->a, A);
 		}
 		idx++;
 	}
@@ -195,7 +197,7 @@ ssize_t move_a_by_pivot(t_data *data, int mode, int pivot)
 		}
 		else
 		{
-			r(&data->b);
+			rotate(&data->b, B);
 		}
 		idx++;
 	}
@@ -210,22 +212,25 @@ void sort_b(t_data *data)
 	ssize_t save;
 	int median;
 
+	// test(data);
 	size = get_stack_size(&data->b);
-	if (size < 3)
+	if (size <= 3)
 	{
-		sort_under_three(&data->b);
+		sort_under_three(&data->b, size, B);
 		while(data->b)
 		{
 			push(data, A);
-			r(&data->a);
+			rotate(&data->a, A);
 		}
 		return ;
 	}
 	median = find_median(&data->b, size);
+	// printf("median=%d\n",median);
 	save = move_a_by_pivot(data, OVER, median);
 	sort_b(data);
 	while (save--)
 		push(data, B);
+	// printf("median=%d\n",median);
 	sort_b(data);
 }
 /*
@@ -235,17 +240,22 @@ int main(int argc, char **argv)
 {
 	t_data data;
 	int		median;
+	ssize_t	save;
 
 	if (argc <= 1)
 		error("Error\nAt least one more argument is required.\n", 46);
 	data.a = read_args(argc, argv);
 	data.b = NULL;
 	median = find_median(&data.a, argc - 1);
-	move_b_by_pivot(&data, UNDER, median);
+	// printf("median=%d\n",median);
+	save = move_b_by_pivot(&data, UNDER, median);
 	sort_b(&data);
-	move_b_by_pivot(&data, OVER, median);
+	// printf("median=%d\n",median);
+	while (argc - 1 > save++)
+		push(&data, B);
+	// move_b_by_pivot(&data, OVER, median);
 	sort_b(&data);
-	test(&data);
+
 	free_list(&data.a);
 	free_list(&data.b);
 }

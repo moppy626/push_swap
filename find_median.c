@@ -46,7 +46,7 @@ int find_median(t_list **list, ssize_t size)
 		return (0);
 	idx = 0;
 	temp = *list;
-	printf("size=%ld\n", size);
+	// printf("size=%ld\n", size);
 	while(temp->next != *list)
 	{
 		ary[idx] = temp->val;

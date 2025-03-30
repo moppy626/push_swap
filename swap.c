@@ -3,7 +3,7 @@
 /*
 	ra・rb処理を実施します
 */
-void	r(t_list **list)
+void	rotate(t_list **list, int mode)
 {
 	t_list	*temp;
 
@@ -11,21 +11,31 @@ void	r(t_list **list)
 		return ;
 	temp = (*list)->next;
 	*list = temp;
+	if (mode == A)
+		ft_printf("ra\n");
+	else
+		ft_printf("rb\n");
 }
 
 /*
 	sa・sb処理を実施します
 */
-void	s(t_list **list)
+void	swap(t_list **list, int mode)
 {
 	t_list	*temp;
 
 	if (*list == (*list)->next)
 		return ;
+	if (mode == A)
+		ft_printf("sa\n");
+	else
+		ft_printf("sb\n");
 	temp = (*list)->next;
 	if (temp->next == *list)
 	{
-		r(list);
+		// r(list);
+		temp = (*list)->next;
+		*list = temp;
 		return ;
 	}
 	temp->prev = (*list)->prev;
@@ -35,10 +45,11 @@ void	s(t_list **list)
 	temp->next = *list;
 	*list = temp;
 }
+
 /*
-	rra・aab処理を実施します
+	rra・rrb処理を実施します
 */
-void	rr(t_list **list)
+void	reverse_rotate(t_list **list, int mode)
 {
 	t_list	*temp;
 
@@ -46,13 +57,8 @@ void	rr(t_list **list)
 		return ;
 	temp = (*list)->prev;
 	*list = temp;
-}
-
-/*
-	rrr処理を実施します
-*/
-void	rrr(t_list **a, t_list **b)
-{
-	rr(a);
-	rr(b);
+	if (mode == A)
+		ft_printf("rra\n");
+	else
+		ft_printf("rrb\n");
 }

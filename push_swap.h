@@ -23,10 +23,9 @@ typedef struct s_data{
 	struct s_list	*a;
 	struct s_list	*b;
 }	t_data;
-void	r(t_list **list);
-void	s(t_list **list);
-void	rr(t_list **list);
-void	rrr(t_list **a, t_list **b);
+void	rotate(t_list **list, int mode);
+void	swap(t_list **list, int mode);
+void	reverse_rotate(t_list **list, int mode);
 void	push(t_data *data, int mode);
 int find_median(t_list **list, ssize_t size);
 #endif
