@@ -21,7 +21,9 @@ typedef struct s_list{
 
 typedef struct s_data{
 	struct s_list	*a;
+	ssize_t			a_size;
 	struct s_list	*b;
+	ssize_t			b_size;
 }	t_data;
 void	rotate(t_list **list, int mode);
 void	swap(t_list **list, int mode);

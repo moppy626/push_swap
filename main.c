@@ -4,7 +4,7 @@ void test(t_data *data)
 {
 	t_list *temp;
 
-	printf("a: ");
+	printf("a(%ld): ", data->a_size);
 	temp = data->a;
 	if (data->a)
 	{
@@ -15,7 +15,7 @@ void test(t_data *data)
 		}
 		printf("%d ", temp->val);
 	}
-	printf("/ b: ");
+	printf("/ b(%ld): ", data->b_size);
 	if (data->b)
 	{
 		temp = data->b;
@@ -106,22 +106,22 @@ void free_list(t_list **list)
 /*
 	スタックの大きさを取得する
 */
-ssize_t get_stack_size(t_list **list)
-{
-	t_list *temp;
-	int ret;
+// ssize_t get_stack_size(t_list **list)
+// {
+// 	t_list *temp;
+// 	int ret;
 
-	if (!*list)
-		return (0);
-	ret = 0;
-	temp = *list;
-	while(temp->next != *list)
-	{
-		ret++;
-		temp = temp->next;
-	}
-	return ++ret;
-}
+// 	if (!*list)
+// 		return (0);
+// 	ret = 0;
+// 	temp = *list;
+// 	while(temp->next != *list)
+// 	{
+// 		ret++;
+// 		temp = temp->next;
+// 	}
+// 	return ++ret;
+// }
 
 /*
 	3件以下のスタックを昇順にソートする
@@ -163,7 +163,7 @@ ssize_t move_b_by_pivot(t_data *data, int mode, int pivot)
 
 	idx = 0;
 	ret = 0;
-	size = get_stack_size(&data->a);
+	size = data->a_size;
 	while (idx < size)
 	{
 		if ((mode && data->a->val >= pivot) || (!mode && data->a->val < pivot))
@@ -187,7 +187,7 @@ ssize_t move_a_by_pivot(t_data *data, int mode, int pivot)
 
 	idx = 0;
 	ret = 0;
-	size = get_stack_size(&data->b);
+	size = data->b_size;
 	while (idx < size)
 	{
 		if ((mode && data->b->val >= pivot) || (!mode && data->b->val < pivot))
@@ -212,8 +212,8 @@ void sort_b(t_data *data)
 	ssize_t save;
 	int median;
 
-	// test(data);
-	size = get_stack_size(&data->b);
+	test(data);
+	size = data->b_size;
 	if (size <= 3)
 	{
 		sort_under_three(&data->b, size, B);
@@ -245,7 +245,10 @@ int main(int argc, char **argv)
 	if (argc <= 1)
 		error("Error\nAt least one more argument is required.\n", 46);
 	data.a = read_args(argc, argv);
+	data.a_size = argc - 1;
 	data.b = NULL;
+	data.b_size = 0;
+	test(&data);
 	median = find_median(&data.a, argc - 1);
 	// printf("median=%d\n",median);
 	save = move_b_by_pivot(&data, UNDER, median);
@@ -255,7 +258,7 @@ int main(int argc, char **argv)
 		push(&data, B);
 	// move_b_by_pivot(&data, OVER, median);
 	sort_b(&data);
-
+	test(&data);
 	free_list(&data.a);
 	free_list(&data.b);
 }

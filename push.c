@@ -35,11 +35,15 @@ void	push(t_data *data, int mode)
 	if (mode == A)
 	{
 		p(&data->b, &data->a);
+		data->a_size++;
+		data->b_size--;
 		ft_printf("pa\n");
 	}
 	else
 	{
 		p(&data->a, &data->b);
+		data->b_size++;
+		data->a_size--;
 		ft_printf("pb\n");
 	}
 }
