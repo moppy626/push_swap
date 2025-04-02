@@ -155,7 +155,7 @@ void sort_under_three(t_list **list, ssize_t size, int mode)
 /*
 	基準値以上・以下のデータをBスタックに移動する
 */
-ssize_t move_b_by_pivot(t_data *data, int mode, int pivot)
+ssize_t move_by_pivot(t_data *data, int ou, int ab, int pivot)
 {
 	ssize_t size;
 	int		idx;
@@ -163,46 +163,23 @@ ssize_t move_b_by_pivot(t_data *data, int mode, int pivot)
 
 	idx = 0;
 	ret = 0;
-	size = data->a_size;
-	while (idx < size)
-	{
-		if ((mode && data->a->val >= pivot) || (!mode && data->a->val < pivot))
-		{
-			push(data, B);
-			ret++;
-		}
+	if (ab == A)
+		size = data->b_size;
+	else
+		size = data->a_size;
+	while (idx++ < size)
+		if (ab == A && ((ou && data->b->val >= pivot) || (!ou && data->b->val < pivot)))
+			ret += push(data, A);
+		else if (ab == B && ((ou && data->a->val >= pivot) || (!ou && data->a->val < pivot)))
+			ret += push(data, B);
 		else
-		{
-			rotate(&data->a, A);
-		}
-		idx++;
-	}
+			if (ab == A)
+				rotate(&data->b, B);
+			else
+				rotate(&data->a, A);
 	return (ret);
 }
-ssize_t move_a_by_pivot(t_data *data, int mode, int pivot)
-{
-	ssize_t size;
-	int		idx;
-	ssize_t ret;
 
-	idx = 0;
-	ret = 0;
-	size = data->b_size;
-	while (idx < size)
-	{
-		if ((mode && data->b->val >= pivot) || (!mode && data->b->val < pivot))
-		{
-			push(data, A);
-			ret++;
-		}
-		else
-		{
-			rotate(&data->b, B);
-		}
-		idx++;
-	}
-	return (ret);
-}
 /*
 	Bスタックの内容をソートする
 */
@@ -226,7 +203,7 @@ void sort_b(t_data *data)
 	}
 	median = find_median(&data->b, size);
 	// printf("median=%d\n",median);
-	save = move_a_by_pivot(data, OVER, median);
+	save = move_by_pivot(data, OVER, A, median);
 	sort_b(data);
 	while (save--)
 		push(data, B);
@@ -251,12 +228,11 @@ int main(int argc, char **argv)
 	test(&data);
 	median = find_median(&data.a, argc - 1);
 	// printf("median=%d\n",median);
-	save = move_b_by_pivot(&data, UNDER, median);
+	save = move_by_pivot(&data, UNDER, B, median);
 	sort_b(&data);
 	// printf("median=%d\n",median);
 	while (argc - 1 > save++)
 		push(&data, B);
-	// move_b_by_pivot(&data, OVER, median);
 	sort_b(&data);
 	test(&data);
 	free_list(&data.a);

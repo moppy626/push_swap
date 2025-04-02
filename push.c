@@ -30,7 +30,7 @@ void	p(t_list **from, t_list **to)
 	}
 	*to = temp;
 }
-void	push(t_data *data, int mode)
+int	push(t_data *data, int mode)
 {
 	if (mode == A)
 	{
@@ -46,6 +46,7 @@ void	push(t_data *data, int mode)
 		data->a_size--;
 		ft_printf("pb\n");
 	}
+	return (1);
 }
 
 

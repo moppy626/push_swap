@@ -28,7 +28,7 @@ typedef struct s_data{
 void	rotate(t_list **list, int mode);
 void	swap(t_list **list, int mode);
 void	reverse_rotate(t_list **list, int mode);
-void	push(t_data *data, int mode);
+int	push(t_data *data, int mode);
 int find_median(t_list **list, ssize_t size);
 #endif
 
