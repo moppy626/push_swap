@@ -30,32 +30,27 @@ void test(t_data *data)
 }
 
 /*
-	3件以下のスタックを昇順にソートする
+	挿入ソート
 */
-void sort_under_three(t_list **list, ssize_t size, int mode)
+void insertion_sort(t_data *data)
 {
-	// printf("size=%ld\n",size);
-	if (size <= 1)
+	ssize_t num;
+
+	if (!data->b)
 		return ;
-	if(size == 2)
+	num = data->b_size;
+	push(data, A);
+	while (data->b)
 	{
-		// printf("(*list)->val=%d, (*list)->next->val=%d\n", (*list)->val, (*list)->next->val);
-		if ((*list)->val > (*list)->next->val)
-			swap(list, mode);
-		return ;
+		while (data->a->val < data->b->val)
+		{
+			rotate(&data->a, A);
+			num--;
+		}
+		push(data, A);
 	}
-	if (size == 3)
-	{
-		if ((*list)->next->val > (*list)->val
-		&& (*list)->next->val > (*list)->next->next->val)
-		reverse_rotate(list, mode);
-		if ((*list)->val > (*list)->next->val
-		&& (*list)->val > (*list)->next->next->val)
-			rotate(list, mode);
-		if ((*list)->val > (*list)->next->val)
-		swap(list, mode);
-		return ;
-	}
+	while (num--)
+		rotate(&data->a, A);
 }
 
 /*
@@ -97,9 +92,9 @@ void sort_b(t_data *data)
 
 	test(data);
 	size = data->b_size;
-	if (size <= 3)
+	if (size <= 7)
 	{
-		sort_under_three(&data->b, size, B);
+		insertion_sort(data);
 		while(data->b)
 		{
 			push(data, A);
@@ -132,14 +127,21 @@ int main(int argc, char **argv)
 	data.b = NULL;
 	data.b_size = 0;
 	test(&data);
-	median = find_median(&data.a, argc - 1);
+	push(&data, B);
+	push(&data, B);
+	push(&data, B);
+	push(&data, B);
+	push(&data, B);
+	test(&data);
+	insertion_sort(&data);
+	// median = find_median(&data.a, argc - 1);
 	// printf("median=%d\n",median);
-	save = move_by_pivot(&data, UNDER, B, median);
-	sort_b(&data);
+	// save = move_by_pivot(&data, UNDER, B, median);
+	// sort_b(&data);
 	// printf("median=%d\n",median);
-	while (argc - 1 > save++)
-		push(&data, B);
-	sort_b(&data);
+	// while (argc - 1 > save++)
+	// 	push(&data, B);
+	// sort_b(&data);
 	test(&data);
 	free_list(&data.a);
 	free_list(&data.b);
