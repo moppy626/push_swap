@@ -34,23 +34,42 @@ void test(t_data *data)
 */
 void insertion_sort(t_data *data)
 {
-	ssize_t num;
+	ssize_t idx;
+	ssize_t moved;
 
 	if (!data->b)
 		return ;
-	num = data->b_size;
-	push(data, A);
+	idx = 0;
+	moved = 0;
+	idx += push(data, A);
+	moved++;
+	// ft_printf("moved:%d / idx:%d / ", moved, idx);
+	// test(data);
 	while (data->b)
 	{
-		while (data->a->val < data->b->val)
+		while (data->a != data->a->prev && idx != 0 && data->a->val < data->b->val)
 		{
-			rotate(&data->a, A);
-			num--;
+			idx -= rotate(&data->a, A);
+			// ft_printf("moved:%d / idx:%d / ", moved, idx);
+			// test(data);
 		}
-		push(data, A);
+		idx += push(data, A);
+		moved++;
+		// ft_printf("moved:%d / idx:%d / ", moved, idx);
+		// test(data);
+		while (data->b && moved > idx && data->a->prev->val > data->b->val)
+		{
+			idx += reverse_rotate(&data->a, A);
+			// ft_printf("moved:%d / idx:%d / ", moved, idx);
+			// test(data);
+		}
 	}
-	while (num--)
-		rotate(&data->a, A);
+	while (idx)
+	{
+		idx -= rotate(&data->a, A);
+		// ft_printf("moved:%d / idx:%d / ", moved, idx);
+		// test(data);
+	}
 }
 
 /*
@@ -90,7 +109,7 @@ void sort_b(t_data *data)
 	ssize_t save;
 	int median;
 
-	test(data);
+	// test(data);
 	size = data->b_size;
 	if (size <= 7)
 	{
@@ -126,22 +145,22 @@ int main(int argc, char **argv)
 	data.a_size = argc - 1;
 	data.b = NULL;
 	data.b_size = 0;
-	test(&data);
-	push(&data, B);
-	push(&data, B);
-	push(&data, B);
-	push(&data, B);
-	push(&data, B);
-	test(&data);
-	insertion_sort(&data);
-	// median = find_median(&data.a, argc - 1);
-	// printf("median=%d\n",median);
-	// save = move_by_pivot(&data, UNDER, B, median);
-	// sort_b(&data);
-	// printf("median=%d\n",median);
-	// while (argc - 1 > save++)
-	// 	push(&data, B);
-	// sort_b(&data);
+	// test(&data);
+	// push(&data, B);
+	// push(&data, B);
+	// push(&data, B);
+	// push(&data, B);
+	// push(&data, B);
+	// test(&data);
+	// insertion_sort(&data);
+	median = find_median(&data.a, argc - 1);
+	printf("median=%d\n",median);
+	save = move_by_pivot(&data, UNDER, B, median);
+	sort_b(&data);
+	printf("median=%d\n",median);
+	while (argc - 1 > save++)
+		push(&data, B);
+	sort_b(&data);
 	test(&data);
 	free_list(&data.a);
 	free_list(&data.b);
