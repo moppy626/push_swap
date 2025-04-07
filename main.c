@@ -111,7 +111,7 @@ void sort_b(t_data *data)
 
 	// test(data);
 	size = data->b_size;
-	if (size <= 7)
+	if (size <= 11)
 	{
 		insertion_sort(data);
 		while(data->b)
@@ -154,14 +154,14 @@ int main(int argc, char **argv)
 	// test(&data);
 	// insertion_sort(&data);
 	median = find_median(&data.a, argc - 1);
-	printf("median=%d\n",median);
+	// printf("median=%d\n",median);
 	save = move_by_pivot(&data, UNDER, B, median);
 	sort_b(&data);
-	printf("median=%d\n",median);
+	// printf("median=%d\n",median);
 	while (argc - 1 > save++)
 		push(&data, B);
 	sort_b(&data);
-	test(&data);
+	// test(&data);
 	free_list(&data.a);
 	free_list(&data.b);
 }
