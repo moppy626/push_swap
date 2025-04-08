@@ -54,11 +54,6 @@ t_list *read_args(int argc, char **argv)
 }
 
 /*
-	リストの最小値を取得する
-*/
-
-
-/*
 	リストを初期化する
 */
 void free_list(t_list **list)
