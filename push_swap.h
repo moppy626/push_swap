@@ -12,6 +12,7 @@
 # define OVER 1
 # define A 0
 # define B 1
+# define AB 2
 
 typedef struct s_list{
 	struct s_list	*prev;
@@ -25,9 +26,9 @@ typedef struct s_data{
 	struct s_list	*b;
 	ssize_t			b_size;
 }	t_data;
-int	rotate(t_list **list, int mode);
+int	rotate(t_data *data, int mode);
 void	swap(t_list **list, int mode);
-int	reverse_rotate(t_list **list, int mode);
+int	reverse_rotate(t_data *data, int mode);
 int	push(t_data *data, int mode);
 int find_median(t_list **list, ssize_t size);
 void error(char *msg, int len);

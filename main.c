@@ -28,54 +28,47 @@ void test(t_data *data)
 	}
 	printf("\n");
 }
-/*
-	最大値のインデックスを取得する
-*/
-ssize_t get_max(t_list **list)
-{
-	ssize_t ret;
-	ssize_t idx;
-	t_list *temp;
-	t_list *max;
 
-	if (!*list)
-		return (0);
-	ret = 0;
-	idx = 0;
-	temp = *list;
-	max = *list;
-	while(temp->next != *list)
-	{
-		if (temp->val > max->val)
-		{
-			max = temp;
-			ret = idx;
-		}
-		temp = temp->next;
-		idx++;
-	}
-	if (temp->val > max->val)
-		ret++;
-	return ret;
-}
 /*
-	選択ソート
+	挿入ソート
 */
-void selection_sort(t_data *data)
+void insertion_sort(t_data *data)
 {
-	ssize_t max_idx;
-	while(data->b)
+	ssize_t idx;
+	ssize_t moved;
+
+	if (!data->b)
+		return ;
+	idx = 0;
+	moved = 0;
+	idx += push(data, A);
+	moved++;
+	// ft_printf("moved:%d / idx:%d / ", moved, idx);
+	// test(data);
+	while (data->b)
 	{
-		max_idx = get_max(&data->b);
-		printf("max_idx=%ld\n",max_idx);
-		if (max_idx + 1 > data->b_size / 2)
-			while (max_idx++ <= data->b_size)
-				reverse_rotate(&data->b, B);
-		else
-			while (0 <= max_idx--)
-				rotate(&data->b, B);
-		push(data, A);
-		test(data);
+		while (data->a != data->a->prev && idx != 0 && data->a->val < data->b->val)
+		{
+			idx -= rotate(data, A);
+			// ft_printf("moved:%d / idx:%d / ", moved, idx);
+			// test(data);
+		}
+		idx += push(data, A);
+		moved++;
+		// ft_printf("moved:%d / idx:%d / ", moved, idx);
+		// test(data);
+		while (data->b && moved > idx && data->a->prev->val > data->b->val)
+		{
+			idx += reverse_rotate(data, A);
+			// ft_printf("moved:%d / idx:%d / ", moved, idx);
+			// test(data);
+		}
+	}
+	while (idx)
+	{
+		idx -= rotate(data, A);
+		// ft_printf("moved:%d / idx:%d / ", moved, idx);
+		// test(data);
 	}
 }
 
@@ -101,9 +94,9 @@ ssize_t move_by_pivot(t_data *data, int ou, int ab, int pivot)
 			ret += push(data, B);
 		else
 			if (ab == A)
-				rotate(&data->b, B);
+				rotate(data, B);
 			else
-				rotate(&data->a, A);
+				rotate(data, A);
 	return (ret);
 }
 
@@ -118,13 +111,13 @@ void sort_b(t_data *data)
 
 	// test(data);
 	size = data->b_size;
-	if (size <= 11)
+	if (size <= 25)
 	{
-		// insertion_sort(data);
+		insertion_sort(data);
 		while(data->b)
 		{
 			push(data, A);
-			rotate(&data->a, A);
+			rotate(data, A);
 		}
 		return ;
 	}
@@ -152,23 +145,23 @@ int main(int argc, char **argv)
 	data.a_size = argc - 1;
 	data.b = NULL;
 	data.b_size = 0;
-	test(&data);
-	push(&data, B);
-	push(&data, B);
-	push(&data, B);
-	push(&data, B);
-	push(&data, B);
-	test(&data);
-	selection_sort(&data);
-	//////////////////////////////////////////////
-	// median = find_median(&data.a, argc - 1);
-	// save = move_by_pivot(&data, UNDER, B, median);
-	// sort_b(&data);
-	// while (argc - 1 > save++)
-	// 	push(&data, B);
-	// sort_b(&data);
-	/////////////////////////////////////////////
-	test(&data);
+	// test(&data);
+	// push(&data, B);
+	// push(&data, B);
+	// push(&data, B);
+	// push(&data, B);
+	// push(&data, B);
+	// test(&data);
+	// insertion_sort(&data);
+	median = find_median(&data.a, argc - 1);
+	// printf("median=%d\n",median);
+	save = move_by_pivot(&data, UNDER, B, median);
+	sort_b(&data);
+	// printf("median=%d\n",median);
+	while (argc - 1 > save++)
+		push(&data, B);
+	sort_b(&data);
+	// test(&data);
 	free_list(&data.a);
 	free_list(&data.b);
 }

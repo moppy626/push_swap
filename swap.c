@@ -3,7 +3,7 @@
 /*
 	ra・rb処理を実施します
 */
-int	rotate(t_list **list, int mode)
+int	r(t_list **list)
 {
 	t_list	*temp;
 
@@ -11,11 +11,28 @@ int	rotate(t_list **list, int mode)
 		return (0);
 	temp = (*list)->next;
 	*list = temp;
-	if (mode == A)
-		ft_printf("ra\n");
-	else
-		ft_printf("rb\n");
+
 	return (1);
+}
+int	rotate(t_data *data, int mode)
+{
+	if (mode == A)
+	{
+		ft_printf("ra\n");
+		return (r(&data->a));
+	}
+	else if (mode == B)
+	{
+		ft_printf("rb\n");
+		return (r(&data->b));
+	}
+	else
+	{
+		ft_printf("rr\n");
+		r(&data->a);
+		r(&data->b);
+	}
+	return (0);
 }
 
 /*
@@ -50,7 +67,7 @@ void	swap(t_list **list, int mode)
 /*
 	rra・rrb処理を実施します
 */
-int	reverse_rotate(t_list **list, int mode)
+int rr(t_list **list)
 {
 	t_list	*temp;
 
@@ -58,9 +75,25 @@ int	reverse_rotate(t_list **list, int mode)
 		return (0);
 	temp = (*list)->prev;
 	*list = temp;
-	if (mode == A)
-		ft_printf("rra\n");
-	else
-		ft_printf("rrb\n");
 	return (1);
+}
+int	reverse_rotate(t_data *data, int mode)
+{
+	if (mode == A)
+	{
+		ft_printf("rra\n");
+		return (rr(&data->a));
+	}
+	else if (mode == B)
+	{
+		ft_printf("rrb\n");
+		return (rr(&data->b));
+	}
+	else
+	{
+		ft_printf("rrr\n");
+		rr(&data->a);
+		rr(&data->b);
+	}
+	return (0);
 }
