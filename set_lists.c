@@ -25,6 +25,13 @@ t_list *new_val(int val, t_list *prev)
 }
 
 /*
+	int型かどうかチェックする
+*/
+int is_int(char *str)
+{
+}
+
+/*
 	パラメタで指定された数字を読み込む
 */
 t_list *read_args(int argc, char **argv)
@@ -75,22 +82,3 @@ void free_list(t_list **list)
 	// printf("list->val:%d\n", last->val);
 	free(last);
 }
-/*
-	スタックの大きさを取得する
-*/
-// ssize_t get_stack_size(t_list **list)
-// {
-// 	t_list *temp;
-// 	int ret;
-
-// 	if (!*list)
-// 		return (0);
-// 	ret = 0;
-// 	temp = *list;
-// 	while(temp->next != *list)
-// 	{
-// 		ret++;
-// 		temp = temp->next;
-// 	}
-// 	return ++ret;
-// }

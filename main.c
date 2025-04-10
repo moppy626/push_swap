@@ -111,7 +111,7 @@ void sort_b(t_data *data)
 
 	// test(data);
 	size = data->b_size;
-	if (size <= 25)
+	if (size <= 20)
 	{
 		insertion_sort(data);
 		while(data->b)
@@ -140,19 +140,11 @@ int main(int argc, char **argv)
 	ssize_t	save;
 
 	if (argc <= 1)
-		error("Error\nAt least one more argument is required.\n", 46);
+		return ;
 	data.a = read_args(argc, argv);
 	data.a_size = argc - 1;
 	data.b = NULL;
 	data.b_size = 0;
-	// test(&data);
-	// push(&data, B);
-	// push(&data, B);
-	// push(&data, B);
-	// push(&data, B);
-	// push(&data, B);
-	// test(&data);
-	// insertion_sort(&data);
 	median = find_median(&data.a, argc - 1);
 	// printf("median=%d\n",median);
 	save = move_by_pivot(&data, UNDER, B, median);
