@@ -3,9 +3,9 @@
 /*
 	エラーメッセージを出力して処理を終了する
 */
-void error(char *msg, int len)
+void error(char *msg)
 {
-	write(1, msg, len);
+	ft_printf(msg);
 	exit(EXIT_SUCCESS);
 }
 
@@ -22,13 +22,6 @@ t_list *new_val(int val, t_list *prev)
 	new->next = NULL;
 
 	return (new);
-}
-
-/*
-	int型かどうかチェックする
-*/
-int is_int(char *str)
-{
 }
 
 /*
