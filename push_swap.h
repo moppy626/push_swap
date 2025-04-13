@@ -31,9 +31,10 @@ void	swap(t_list **list, int mode);
 int	reverse_rotate(t_data *data, int mode);
 int	push(t_data *data, int mode);
 int find_median(t_list **list, ssize_t size);
-void error(char *msg, int len);
-t_list *new_val(int val, t_list *prev);
-t_list *read_args(int argc, char **argv);
+t_list	*new_val(int val);
+t_list *read_arg(char **argv);
 void free_list(t_list **list);
+t_list *read_args(int argc, char **argv);
+
 #endif
 

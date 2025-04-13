@@ -4,10 +4,10 @@ void test(t_data *data)
 {
 	t_list *temp;
 
-	printf("a(%ld): ", data->a_size);
-	temp = data->a;
 	if (data->a)
 	{
+		printf("a(%ld): ", data->a_size);
+		temp = data->a;
 		while ((data->a)->prev != temp)
 		{
 			printf("%d ", temp->val);
@@ -15,9 +15,9 @@ void test(t_data *data)
 		}
 		printf("%d ", temp->val);
 	}
-	printf("/ b(%ld): ", data->b_size);
 	if (data->b)
 	{
+		printf("/ b(%ld): ", data->b_size);
 		temp = data->b;
 		while ((data->b)->prev != temp)
 		{
@@ -99,7 +99,47 @@ ssize_t move_by_pivot(t_data *data, int ou, int ab, int pivot)
 				rotate(data, A);
 	return (ret);
 }
+/*
+	ソート済みチェック
+*/
+int is_sorted(t_list **list, ssize_t size)
+{
+	ssize_t idx;
+	t_list *temp;
 
+	if (!*list)
+		return (0);
+	idx = 0;
+	temp = *list;
+	while (idx < size - 1)
+	{
+		if (temp->val > temp->next->val)
+			return (0);
+		temp = temp->next;
+		idx++;
+	}
+	return (1);
+}
+
+/*
+	スタックの大きさを取得する
+*/
+ssize_t get_stack_size(t_list **list)
+{
+	t_list *temp;
+	int ret;
+
+	if (!*list)
+		return (0);
+	ret = 0;
+	temp = *list;
+	while(temp->next != *list)
+	{
+		ret++;
+		temp = temp->next;
+	}
+	return ++ret;
+}
 /*
 	Bスタックの内容をソートする
 */
@@ -140,20 +180,22 @@ int main(int argc, char **argv)
 	ssize_t	save;
 
 	if (argc <= 1)
-		return ;
+		return (0);
 	data.a = read_args(argc, argv);
-	data.a_size = argc - 1;
+	data.a_size = get_stack_size(&data.a);
 	data.b = NULL;
 	data.b_size = 0;
-	median = find_median(&data.a, argc - 1);
+	if (is_sorted(&data.a, data.a_size))
+		return (0);
+	// median = find_median(&data.a, argc - 1);
 	// printf("median=%d\n",median);
-	save = move_by_pivot(&data, UNDER, B, median);
-	sort_b(&data);
+	// save = move_by_pivot(&data, UNDER, B, median);
+	// sort_b(&data);
 	// printf("median=%d\n",median);
-	while (argc - 1 > save++)
-		push(&data, B);
-	sort_b(&data);
-	// test(&data);
+	// while (argc - 1 > save++)
+	// 	push(&data, B);
+	// sort_b(&data);
+	test(&data);
 	free_list(&data.a);
 	free_list(&data.b);
 }

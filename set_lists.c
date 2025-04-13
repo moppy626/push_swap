@@ -1,27 +1,106 @@
 #include "push_swap.h"
 
+static int	is_space(char c)
+{
+	if ((9 <= c && c <= 13) || c == 32)
+		return (1);
+	else
+		return (0);
+}
+
+/*
+	split関数の戻り値をfreeする
+*/
+void free_splited(char **splited)
+{
+	int i;
+
+	i = 0;
+	while (splited[i])
+		free(splited[i++]);
+	free(splited);
+}
+
 /*
 	エラーメッセージを出力して処理を終了する
 */
-void error(char *msg)
+void error(char *msg, t_list **lst, char **splited)
 {
 	ft_printf(msg);
+	if(splited)
+		free_splited(splited);
+	if (lst)
+		free_list(lst);
 	exit(EXIT_SUCCESS);
 }
 
 /*
-	新しい構造体を作成する
+	int型への変換を行う
 */
-t_list *new_val(int val, t_list *prev)
+int	to_int(const char *str, t_list **lst, char **splited)
 {
-	t_list *new;
+	long	ret;
+	int		i;
+	int		fugou;
 
-	new = malloc(sizeof(t_list));
-	new->prev = prev;
-	new->val = val;
-	new->next = NULL;
+	i = 0;
+	while (is_space((char)str[i]))
+		i++;
+	fugou = 1;
+	if (str[i] == '-' || str[i] == '+')
+		if (str[i++] == '-')
+			fugou = -1;
+	if (!('0' <= str[i] && str[i] <= '9'))
+		error("Argument must be number\n", lst, splited);
+	ret = 0;
+	while (str[i] && str[i] != '.')
+	{	
+		if (!('0' <= str[i] && str[i] <= '9'))
+			error("Argument must be number\n", lst, splited);
+		else if ((fugou < 0) && (ret > 0) && (ret > (INT_MAX - (str[i] - '0' - 1)) / 10))
+				error("Numeric value must be in the range of int\n", lst, splited);
+		else if ((fugou >= 0) && (ret > (INT_MAX - (str[i] - '0')) / 10))
+				error("Numeric value must be in the range of int\n", lst, splited);
+		ret = (ret * 10) + (str[i++] - '0');
+	}
+	return (fugou * ret);
+}
 
-	return (new);
+/*
+	新しい双方向リストの構造体を作成する
+*/
+t_list	*new_val(int val)
+{
+	t_list	*list;
+
+	list = malloc(sizeof(t_list));
+	if (!list)
+		return (NULL);
+	list->val = val;
+	list->prev = NULL;
+	list->next = NULL;
+	return (list);
+}
+/*
+	双方向リストの最後に値を追加する
+*/
+void	add_back(t_list **lst, t_list *new)
+{
+	t_list	*temp;
+
+	if (!lst || !(*lst))
+	{
+		*lst = new;
+		return ;
+	}
+	else
+	{
+		temp = *lst;
+		while (temp->next != NULL)
+			temp = temp->next;
+		temp->next = new;
+		new->prev = temp;
+	}
 }
 
 /*
@@ -29,27 +108,30 @@ t_list *new_val(int val, t_list *prev)
 */
 t_list *read_args(int argc, char **argv)
 {
-	ssize_t	cnt;
+	ssize_t	i;
+	ssize_t	j;
 	t_list *ret;
-	t_list *tmp;
 	t_list *new;
+	char **splited;
 
-	cnt = 1;
+	i = 1;
+	j = 0;
 	ret = NULL;
-	tmp = ret;
-	while (cnt < argc)
+	while (i < argc)
 	{
-		// printf("argc[cnt]:%s\n", argv[cnt]);
-		new = new_val(ft_atoi(argv[cnt]), tmp);
-		if (!ret)
-			ret = new;
-		else
-			tmp->next = new;
-		tmp = new;
-		cnt++;
+		j = 0;
+		splited = ft_split(argv[i], ' ');
+		while (splited[j])
+		{
+			new = new_val(to_int(splited[j], &ret, splited));
+			add_back(&ret, new);
+			j++;
+		}
+		i++;
 	}
-	ret->prev = tmp;
-	tmp->next = ret;
+	free_splited(splited);
+	ret->prev = new;
+	new->next = ret;
 	return (ret);
 }
 
@@ -63,8 +145,8 @@ void free_list(t_list **list)
 
 	if (!list || !*list)
 		return ;
-		last = (*list)->prev;
-	*list = *list;
+	last = (*list)->prev;
+	// *list = *list;
 	while (last != *list)
 	{
 		// printf("list->val:%d\n", (*list)->val);
