@@ -11,4 +11,4 @@ all: push_swap
 push_swap:$(SRC) $(SRC_LIBFT) $(SRC_PRINTF)
 	sudo cc $(SRC) $(SRC_LIBFT) $(SRC_PRINTF) -o push_swap
 test:push_swap
-	sudo valgrind --tool=memcheck --leak-check=yes --show-reachable=yes ./push_swap  "　3"
+	sudo valgrind --tool=memcheck --leak-check=yes --show-reachable=yes ./push_swap  "48 45 43 6 7 37 2 41 50 28 15 31 39 24 32 42 21 16 27 44 23 38 49 34 19 1 8 47 29 9 17 26 3 10 14 35 4 12 33 18 40 22 20 36 13 11 46 30 25 5"

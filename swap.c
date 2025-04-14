@@ -51,7 +51,6 @@ void	swap(t_list **list, int mode)
 	temp = (*list)->next;
 	if (temp->next == *list)
 	{
-		// r(list);
 		temp = (*list)->next;
 		*list = temp;
 		return ;

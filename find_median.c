@@ -1,23 +1,33 @@
-#include "push_swap.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   find_median.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/14 21:50:18 by mmachida          #+#    #+#             */
+/*   Updated: 2025/04/14 21:50:18 by mmachida         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "push_swap.h"
 
 /*
 	配列をソートする
 */
-void sort_median(int	ary[], ssize_t from, ssize_t to)
+void	sort_median(int ary[], ssize_t from, ssize_t to)
 {
-	ssize_t low;
-	ssize_t high;
+	ssize_t	low;
+	ssize_t	high;
 	int		temp;
 
-	// printf("from=%ld, to=%ld\n", from, to);
-	if(from >= to)
+	if (from >= to)
 		return ;
 	low = from;
 	high = to;
 	while (1)
 	{
-		while(ary[low] < ary[from])
+		while (ary[low] < ary[from])
 			low++;
 		while (ary[high] > ary[from])
 			high--;
@@ -36,18 +46,20 @@ void sort_median(int	ary[], ssize_t from, ssize_t to)
 /*
 	リストの中央値を取得
 */
-int find_median(t_list **list, ssize_t size)
+int	find_median(t_list **list, ssize_t size)
 {
-	t_list *temp;
-	ssize_t idx;
-	int	ary[size];
+	t_list	*temp;
+	ssize_t	idx;
+	int		*ary;
 
-	if (!*list)
+	if (!*list || size <= 0)
+		return (0);
+	ary = (int *)malloc(sizeof(int) * size);
+	if (!ary)
 		return (0);
 	idx = 0;
 	temp = *list;
-	// printf("size=%ld\n", size);
-	while(temp->next != *list)
+	while (temp->next != *list)
 	{
 		ary[idx] = temp->val;
 		temp = temp->next;
@@ -55,6 +67,7 @@ int find_median(t_list **list, ssize_t size)
 	}
 	ary[idx] = temp->val;
 	sort_median(ary, 0, size - 1);
-	idx = 0;
-	return (ary[size / 2]);
+	idx = ary[size / 2];
+	free(ary);
+	return (idx);
 }

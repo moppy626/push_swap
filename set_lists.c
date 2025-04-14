@@ -51,16 +51,17 @@ int	to_int(const char *str, t_list **lst, char **splited)
 		if (str[i++] == '-')
 			fugou = -1;
 	if (!('0' <= str[i] && str[i] <= '9'))
-		error("Argument must be number\n", lst, splited);
+		error("Error\n Argument must be number\n", lst, splited);
 	ret = 0;
 	while (str[i] && str[i] != '.')
 	{	
+		printf("ret:%ld\n",ret);
 		if (!('0' <= str[i] && str[i] <= '9'))
-			error("Argument must be number\n", lst, splited);
+			error("Error\n Argument must be number\n", lst, splited);
 		else if ((fugou < 0) && (ret > 0) && (ret > (INT_MAX - (str[i] - '0' - 1)) / 10))
-				error("Numeric value must be in the range of int\n", lst, splited);
+				error("Error\n Numeric value must be in the range of int\n", lst, splited);
 		else if ((fugou >= 0) && (ret > (INT_MAX - (str[i] - '0')) / 10))
-				error("Numeric value must be in the range of int\n", lst, splited);
+				error("Error\n Numeric value must be in the range of int\n", lst, splited);
 		ret = (ret * 10) + (str[i++] - '0');
 	}
 	return (fugou * ret);
@@ -84,7 +85,7 @@ t_list	*new_val(int val)
 /*
 	双方向リストの最後に値を追加する
 */
-void	add_back(t_list **lst, t_list *new)
+void	add_back(t_list **lst, t_list *new, char **splited)
 {
 	t_list	*temp;
 
@@ -97,7 +98,11 @@ void	add_back(t_list **lst, t_list *new)
 	{
 		temp = *lst;
 		while (temp->next != NULL)
+		{
 			temp = temp->next;
+			if(temp->val == new->val)
+				error("Error\n Some arguments are duplicates\n", lst, splited);
+		}
 		temp->next = new;
 		new->prev = temp;
 	}
@@ -124,7 +129,7 @@ t_list *read_args(int argc, char **argv)
 		while (splited[j])
 		{
 			new = new_val(to_int(splited[j], &ret, splited));
-			add_back(&ret, new);
+			add_back(&ret, new, splited);
 			j++;
 		}
 		i++;
@@ -149,11 +154,9 @@ void free_list(t_list **list)
 	// *list = *list;
 	while (last != *list)
 	{
-		// printf("list->val:%d\n", (*list)->val);
 		tmp = *list;
 		*list = (*list)->next;
 		free(tmp);
 	}
-	// printf("list->val:%d\n", last->val);
 	free(last);
 }
