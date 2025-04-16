@@ -1,5 +1,5 @@
 
-SRC = main.c push.c swap.c find_median.c set_lists.c
+SRC = main.c push.c swap.c find_median.c set_lists.c check_args.c
 SRC_LIBFT = ft_memcpy.c ft_split.c
 SRC_PRINTF = str_funcs.c ft_strlen.c printf_funcs.c ft_printf.c
 

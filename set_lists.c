@@ -1,13 +1,5 @@
 #include "push_swap.h"
 
-static int	is_space(char c)
-{
-	if ((9 <= c && c <= 13) || c == 32)
-		return (1);
-	else
-		return (0);
-}
-
 /*
 	split関数の戻り値をfreeする
 */
@@ -19,52 +11,6 @@ void free_splited(char **splited)
 	while (splited[i])
 		free(splited[i++]);
 	free(splited);
-}
-
-/*
-	エラーメッセージを出力して処理を終了する
-*/
-void error(char *msg, t_list **lst, char **splited)
-{
-	ft_printf(msg);
-	if(splited)
-		free_splited(splited);
-	if (lst)
-		free_list(lst);
-	exit(EXIT_SUCCESS);
-}
-
-/*
-	int型への変換を行う
-*/
-int	to_int(const char *str, t_list **lst, char **splited)
-{
-	long	ret;
-	int		i;
-	int		fugou;
-
-	i = 0;
-	while (is_space((char)str[i]))
-		i++;
-	fugou = 1;
-	if (str[i] == '-' || str[i] == '+')
-		if (str[i++] == '-')
-			fugou = -1;
-	if (!('0' <= str[i] && str[i] <= '9'))
-		error("Error\n Argument must be number\n", lst, splited);
-	ret = 0;
-	while (str[i] && str[i] != '.')
-	{	
-		printf("ret:%ld\n",ret);
-		if (!('0' <= str[i] && str[i] <= '9'))
-			error("Error\n Argument must be number\n", lst, splited);
-		else if ((fugou < 0) && (ret > 0) && (ret > (INT_MAX - (str[i] - '0' - 1)) / 10))
-				error("Error\n Numeric value must be in the range of int\n", lst, splited);
-		else if ((fugou >= 0) && (ret > (INT_MAX - (str[i] - '0')) / 10))
-				error("Error\n Numeric value must be in the range of int\n", lst, splited);
-		ret = (ret * 10) + (str[i++] - '0');
-	}
-	return (fugou * ret);
 }
 
 /*
@@ -101,7 +47,7 @@ void	add_back(t_list **lst, t_list *new, char **splited)
 		{
 			temp = temp->next;
 			if(temp->val == new->val)
-				error("Error\n Some arguments are duplicates\n", lst, splited);
+				error("Some arguments are duplicates\n", lst, splited);
 		}
 		temp->next = new;
 		new->prev = temp;
@@ -151,7 +97,6 @@ void free_list(t_list **list)
 	if (!list || !*list)
 		return ;
 	last = (*list)->prev;
-	// *list = *list;
 	while (last != *list)
 	{
 		tmp = *list;

@@ -32,9 +32,13 @@ int	reverse_rotate(t_data *data, int mode);
 int	push(t_data *data, int mode);
 int find_median(t_list **list, ssize_t size);
 t_list	*new_val(int val);
-t_list *read_arg(char **argv);
 void free_list(t_list **list);
 t_list *read_args(int argc, char **argv);
+void error(char *msg, t_list **lst, char **splited);
+int is_sorted(t_list **list, ssize_t size);
+ssize_t get_stack_size(t_list **list);
+int	to_int(const char *str, t_list **lst, char **splited);
+void free_splited(char **splited);
 
 #endif
 
