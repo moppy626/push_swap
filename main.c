@@ -6,7 +6,7 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 22:51:36 by mmachida          #+#    #+#             */
-/*   Updated: 2025/04/15 23:23:44 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/04/17 23:57:11 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,36 +44,6 @@ void	insertion_sort(t_data *data)
 }
 
 /*
-	基準値以上・以下のデータをBスタックに移動する
-*/
-ssize_t	move_by_pivot(t_data *data, int ou, int ab, int pivot)
-{
-	ssize_t	size;
-	int		idx;
-	ssize_t	ret;
-
-	idx = 0;
-	ret = 0;
-	if (ab == A)
-		size = data->b_size;
-	else
-		size = data->a_size;
-	while (idx++ < size)
-		if (ab == A && ((ou && data->b->val >= pivot)
-			|| (!ou && data->b->val < pivot)))
-			ret += push(data, A);
-		else if (ab == B && ((ou && data->a->val >= pivot)
-			|| (!ou && data->a->val < pivot)))
-			ret += push(data, B);
-		else
-			if (ab == A)
-				rotate(data, B);
-			else
-				rotate(data, A);
-	return (ret);
-}
-
-/*
 	Bスタックの内容をソートする
 */
 void	sort_b(t_data *data)
@@ -100,6 +70,7 @@ void	sort_b(t_data *data)
 		push(data, B);
 	sort_b(data);
 }
+
 /*
 	3件以下のスタックを昇順にソートする
 */
@@ -116,16 +87,17 @@ void	sort_under_three(t_data *data, ssize_t size)
 	if (size == 3)
 	{
 		if (data->a->next->val > data->a->val
-		&& data->a->next->val > data->a->next->next->val)
-		reverse_rotate(data, A);
+			&& data->a->next->val > data->a->next->next->val)
+			reverse_rotate(data, A);
 		if (data->a->val > data->a->next->val
-		&& data->a->val > data->a->next->next->val)
+			&& data->a->val > data->a->next->next->val)
 			rotate(data, A);
 		if (data->a->val > data->a->next->val)
-		swap(&data->a, A);
+			swap(&data->a, A);
 		return ;
 	}
 }
+
 /*
 	メイン関数
 */
@@ -144,7 +116,7 @@ int	main(int argc, char **argv)
 	data.b_size = 0;
 	if (is_sorted(&data.a, data.a_size))
 		return (0);
-	if (data.a_size >  3)
+	if (data.a_size > 3)
 	{
 		size = data.a_size;
 		median = find_median(&data.a, size);
