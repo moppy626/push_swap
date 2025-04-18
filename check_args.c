@@ -15,14 +15,16 @@
 /*
 	エラーメッセージを出力して処理を終了する
 */
-void	error(char *msg, t_list **lst, char **splited)
+void	error(char *msg, t_list **lst1, t_list **lst2, char **splited)
 {
 	ft_printf("Error\n %s", msg);
+	if (lst1)
+		free_list(lst1);
+	if (lst2)
+		free_list(lst2);
 	if (splited)
 		free_splited(splited);
-	if (lst)
-		free_list(lst);
-	exit (EXIT_SUCCESS);
+	exit (EXIT_FAILURE);
 }
 
 /*
@@ -53,16 +55,16 @@ int	to_int(const char *str, t_list **lst, char **splited)
 		if (str[i++] == '-')
 			fugou = -1;
 	if (!('0' <= str[i] && str[i] <= '9'))
-		error("Argument must be number\n", lst, splited);
+		error("Argument must be number\n", lst, NULL, splited);
 	ret = 0;
 	while (str[i] && str[i] != '.')
 	{	
 		if (!('0' <= str[i] && str[i] <= '9'))
-			error("Argument must be number\n", lst, splited);
+			error("Argument must be number\n", lst, NULL, splited);
 		else if ((fugou < 0) && (fugou * ret < (INT_MIN + (str[i] - '0')) / 10))
-			error("Numeric value must be in the range of int\n", lst, splited);
+			error("Out of int range\n", lst, NULL, splited);
 		else if ((fugou >= 0) && (ret > (INT_MAX - (str[i] - '0')) / 10))
-			error("Numeric value must be in the range of int\n", lst, splited);
+			error("Out of int range\n", lst, NULL, splited);
 		ret = (ret * 10) + (str[i++] - '0');
 	}
 	return (fugou * ret);

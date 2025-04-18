@@ -6,7 +6,7 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 22:51:36 by mmachida          #+#    #+#             */
-/*   Updated: 2025/04/17 23:57:11 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/04/18 23:20:43 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	sort_b(t_data *data)
 		}
 		return ;
 	}
-	median = find_median(&data->b, size);
+	median = find_median(data, &data->b, size);
 	save = move_by_pivot(data, OVER, A, median);
 	sort_b(data);
 	while (save--)
@@ -110,16 +110,13 @@ int	main(int argc, char **argv)
 
 	if (argc <= 1)
 		return (0);
-	data.a = read_args(argc, argv);
-	data.a_size = get_stack_size(&data.a);
-	data.b = NULL;
-	data.b_size = 0;
+	set_data(argc, argv, &data);
 	if (is_sorted(&data.a, data.a_size))
 		return (0);
 	if (data.a_size > 3)
 	{
 		size = data.a_size;
-		median = find_median(&data.a, size);
+		median = find_median(&data, &data.a, size);
 		save = move_by_pivot(&data, UNDER, B, median);
 		sort_b(&data);
 		while (size > save++)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   swap.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/18 22:01:54 by mmachida          #+#    #+#             */
+/*   Updated: 2025/04/18 22:01:54 by mmachida         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 /*
@@ -11,9 +23,9 @@ int	r(t_list **list)
 		return (0);
 	temp = (*list)->next;
 	*list = temp;
-
 	return (1);
 }
+
 int	rotate(t_data *data, int mode)
 {
 	if (mode == A)
@@ -66,7 +78,7 @@ void	swap(t_list **list, int mode)
 /*
 	rra・rrb処理を実施します
 */
-int rr(t_list **list)
+int	rr(t_list **list)
 {
 	t_list	*temp;
 
@@ -76,6 +88,7 @@ int rr(t_list **list)
 	*list = temp;
 	return (1);
 }
+
 int	reverse_rotate(t_data *data, int mode)
 {
 	if (mode == A)

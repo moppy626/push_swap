@@ -1,33 +1,35 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   set_lists.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/18 21:59:00 by mmachida          #+#    #+#             */
+/*   Updated: 2025/04/18 21:59:00 by mmachida         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
-
-/*
-	split関数の戻り値をfreeする
-*/
-void free_splited(char **splited)
-{
-	int i;
-
-	i = 0;
-	while (splited[i])
-		free(splited[i++]);
-	free(splited);
-}
 
 /*
 	新しい双方向リストの構造体を作成する
 */
-t_list	*new_val(int val)
+t_list	*new_val(int val, t_list **list, char	**splited)
 {
-	t_list	*list;
+	t_list	*new;
 
-	list = malloc(sizeof(t_list));
-	if (!list)
-		return (NULL);
-	list->val = val;
-	list->prev = NULL;
-	list->next = NULL;
-	return (list);
+	new = malloc(sizeof(t_list));
+	if (!new)
+	{
+		error("malloc error\n", list, NULL, splited);
+	}	
+	new->val = val;
+	new->prev = NULL;
+	new->next = NULL;
+	return (new);
 }
+
 /*
 	双方向リストの最後に値を追加する
 */
@@ -46,8 +48,8 @@ void	add_back(t_list **lst, t_list *new, char **splited)
 		while (temp->next != NULL)
 		{
 			temp = temp->next;
-			if(temp->val == new->val)
-				error("Some arguments are duplicates\n", lst, splited);
+			if (temp->val == new->val)
+				error("Some arguments are duplicates\n", lst, NULL, splited);
 		}
 		temp->next = new;
 		new->prev = temp;
@@ -57,13 +59,13 @@ void	add_back(t_list **lst, t_list *new, char **splited)
 /*
 	パラメタで指定された数字を読み込む
 */
-t_list *read_args(int argc, char **argv)
+t_list	*read_args(int argc, char **argv)
 {
 	ssize_t	i;
 	ssize_t	j;
-	t_list *ret;
-	t_list *new;
-	char **splited;
+	t_list	*ret;
+	t_list	*new;
+	char	**splited;
 
 	i = 1;
 	j = 0;
@@ -74,7 +76,7 @@ t_list *read_args(int argc, char **argv)
 		splited = ft_split(argv[i], ' ');
 		while (splited[j])
 		{
-			new = new_val(to_int(splited[j], &ret, splited));
+			new = new_val(to_int(splited[j], &ret, splited), &ret, splited);
 			add_back(&ret, new, splited);
 			j++;
 		}
@@ -87,21 +89,12 @@ t_list *read_args(int argc, char **argv)
 }
 
 /*
-	リストを初期化する
+	データ保存用の構造体をセットする
 */
-void free_list(t_list **list)
+void	*set_data(int argc, char **argv, t_data *data)
 {
-	t_list *tmp;
-	t_list *last;
-
-	if (!list || !*list)
-		return ;
-	last = (*list)->prev;
-	while (last != *list)
-	{
-		tmp = *list;
-		*list = (*list)->next;
-		free(tmp);
-	}
-	free(last);
+	data->a = read_args(argc, argv);
+	data->a_size = get_stack_size(&data->a);
+	data->b = NULL;
+	data->b_size = 0;
 }

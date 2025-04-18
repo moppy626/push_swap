@@ -6,7 +6,7 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 18:28:15 by mmachida          #+#    #+#             */
-/*   Updated: 2025/02/20 23:35:15 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/04/18 22:04:58 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <unistd.h>
 # include <stdint.h>
 # include <limits.h>
-
 
 int				ft_isalpha(int c);
 int				ft_isdigit(int c);

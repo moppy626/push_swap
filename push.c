@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/18 21:52:21 by mmachida          #+#    #+#             */
+/*   Updated: 2025/04/18 21:52:21 by mmachida         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 /*
@@ -19,7 +31,7 @@ void	p(t_list **from, t_list **to)
 	if (!*to)
 	{
 		temp->prev = temp;
-		temp->next = temp; 
+		temp->next = temp;
 	}
 	else
 	{
@@ -30,6 +42,7 @@ void	p(t_list **from, t_list **to)
 	}
 	*to = temp;
 }
+
 int	push(t_data *data, int mode)
 {
 	if (mode == A)
@@ -48,7 +61,3 @@ int	push(t_data *data, int mode)
 	}
 	return (1);
 }
-
-
-
-

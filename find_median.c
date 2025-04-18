@@ -46,7 +46,7 @@ void	sort_median(int ary[], ssize_t from, ssize_t to)
 /*
 	リストの中央値を取得
 */
-int	find_median(t_list **list, ssize_t size)
+int	find_median(t_data *data, t_list **list, ssize_t size)
 {
 	t_list	*temp;
 	ssize_t	idx;
@@ -56,7 +56,7 @@ int	find_median(t_list **list, ssize_t size)
 		return (0);
 	ary = (int *)malloc(sizeof(int) * size);
 	if (!ary)
-		return (0);
+		error("malloc error\n", &data->a, &data->b, NULL);
 	idx = 0;
 	temp = *list;
 	while (temp->next != *list)
