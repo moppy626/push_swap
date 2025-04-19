@@ -40,7 +40,7 @@ int		rotate(t_data *data, int mode);
 void	swap(t_list **list, int mode);
 int		reverse_rotate(t_data *data, int mode);
 int		push(t_data *data, int mode);
-int	find_median(t_data *data, t_list **list, ssize_t size);
+int		find_median(t_data *data, t_list **list, ssize_t size);
 void	free_list(t_list **list);
 t_list	*read_args(int argc, char **argv);
 void	error(char *msg, t_list **lst1, t_list **lst2, char **splited);

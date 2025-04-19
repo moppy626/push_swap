@@ -68,19 +68,18 @@ t_list	*read_args(int argc, char **argv)
 	char	**splited;
 
 	i = 1;
-	j = 0;
 	ret = NULL;
 	while (i < argc)
 	{
 		j = 0;
-		splited = ft_split(argv[i], ' ');
+		splited = ft_split(argv[i++], ' ');
+		if (splited == NULL)
+			error("Faild in ft_split\n", &ret, NULL, splited);
 		while (splited[j])
 		{
-			new = new_val(to_int(splited[j], &ret, splited), &ret, splited);
+			new = new_val(to_int(splited[j++], &ret, splited), &ret, splited);
 			add_back(&ret, new, splited);
-			j++;
 		}
-		i++;
 	}
 	free_splited(splited);
 	ret->prev = new;
