@@ -80,8 +80,8 @@ t_list	*read_args(int argc, char **argv)
 			new = new_val(to_int(splited[j++], &ret, splited), &ret, splited);
 			add_back(&ret, new, splited);
 		}
+		free_splited(splited);
 	}
-	free_splited(splited);
 	ret->prev = new;
 	new->next = ret;
 	return (ret);
