@@ -49,6 +49,6 @@ ssize_t	get_stack_size(t_list **list);
 int		to_int(const char *str, t_list **lst, char **splited);
 void	free_splited(char **splited);
 ssize_t	move_by_pivot(t_data *data, int ou, int ab, int pivot);
-void	*set_data(int argc, char **argv, t_data *data);
+void	set_data(int argc, char **argv, t_data *data);
 
 #endif

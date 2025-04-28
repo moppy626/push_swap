@@ -6,7 +6,7 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 08:42:45 by user42            #+#    #+#             */
-/*   Updated: 2025/04/12 22:37:06 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/04/19 22:28:03 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	**ft_split(char const *s, char c)
 	while (start < ft_strlen(s))
 	{
 		len = copy((char *)&s[start], c, ret, idx++);
-		if (len < 0)
+		if (len == (size_t)(-1))
 			return (NULL);
 		start += len;
 		if (c != '\0')

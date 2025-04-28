@@ -90,7 +90,7 @@ t_list	*read_args(int argc, char **argv)
 /*
 	データ保存用の構造体をセットする
 */
-void	*set_data(int argc, char **argv, t_data *data)
+void	set_data(int argc, char **argv, t_data *data)
 {
 	data->a = read_args(argc, argv);
 	data->a_size = get_stack_size(&data->a);
