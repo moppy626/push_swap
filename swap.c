@@ -13,7 +13,7 @@
 #include "push_swap.h"
 
 /*
-	ra・rb処理を実施します
+	Perform ra and rb processing
 */
 int	r(t_list **list)
 {
@@ -48,7 +48,7 @@ int	rotate(t_data *data, int mode)
 }
 
 /*
-	sa・sb処理を実施します
+	Perform sa and sb processing
 */
 void	swap(t_list **list, int mode)
 {
@@ -76,7 +76,7 @@ void	swap(t_list **list, int mode)
 }
 
 /*
-	rra・rrb処理を実施します
+	Perform rra and rrb processing
 */
 int	rr(t_list **list)
 {
