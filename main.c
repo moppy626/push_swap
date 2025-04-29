@@ -13,7 +13,7 @@
 #include "push_swap.h"
 
 /*
-	挿入ソート
+	Insertation sort
 */
 void	insertion_sort(t_data *data)
 {
@@ -44,7 +44,7 @@ void	insertion_sort(t_data *data)
 }
 
 /*
-	Bスタックの内容をソートする
+	Sort the contents of the B stack
 */
 void	sort_b(t_data *data)
 {
@@ -72,7 +72,7 @@ void	sort_b(t_data *data)
 }
 
 /*
-	3件以下のスタックを昇順にソートする
+	Sort stacks of 3 or less in ascending order
 */
 void	sort_under_three(t_data *data, ssize_t size)
 {
@@ -99,7 +99,7 @@ void	sort_under_three(t_data *data, ssize_t size)
 }
 
 /*
-	メイン関数
+	main function
 */
 int	main(int argc, char **argv)
 {
