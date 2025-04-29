@@ -13,7 +13,7 @@
 #include "push_swap.h"
 
 /*
-	基準値以上・以下のデータをBスタックに移動する
+	Move data above and below the standard value to the B stack
 */
 ssize_t	move_by_pivot(t_data *data, int ou, int ab, int pivot)
 {
@@ -44,7 +44,7 @@ ssize_t	move_by_pivot(t_data *data, int ou, int ab, int pivot)
 }
 
 /*
-	split関数の戻り値をfreeする
+	Free the return value of the split function
 */
 void	free_splited(char **splited)
 {
