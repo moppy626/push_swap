@@ -13,7 +13,7 @@
 #include "push_swap.h"
 
 /*
-	新しい双方向リストの構造体を作成する
+	Create a new bi-directional list structure
 */
 t_list	*new_val(int val, t_list **list, char	**splited)
 {
@@ -31,7 +31,7 @@ t_list	*new_val(int val, t_list **list, char	**splited)
 }
 
 /*
-	双方向リストの最後に値を追加する
+	Adds a value to the end of a bidirectional list
 */
 void	add_back(t_list **lst, t_list *new, char **splited)
 {
@@ -57,7 +57,7 @@ void	add_back(t_list **lst, t_list *new, char **splited)
 }
 
 /*
-	パラメタで指定された数字を読み込む
+	Reads the number specified in the parameter
 */
 t_list	*read_args(int argc, char **argv)
 {
@@ -88,7 +88,7 @@ t_list	*read_args(int argc, char **argv)
 }
 
 /*
-	データ保存用の構造体をセットする
+	Set structure for data storage
 */
 void	set_data(int argc, char **argv, t_data *data)
 {
