@@ -13,7 +13,7 @@
 #include "push_swap.h"
 
 /*
-	エラーメッセージを出力して処理を終了する
+	Outputs an error message and terminates the process
 */
 void	error(char *msg, t_list **lst1, t_list **lst2, char **splited)
 {
@@ -28,7 +28,7 @@ void	error(char *msg, t_list **lst1, t_list **lst2, char **splited)
 }
 
 /*
-	空白を判定する
+	Judging blanks
 */
 int	is_space(char c)
 {
@@ -39,7 +39,7 @@ int	is_space(char c)
 }
 
 /*
-	int型への変換を行う
+	Convert to int type
 */
 int	to_int(const char *str, t_list **lst, char **splited)
 {
@@ -71,7 +71,7 @@ int	to_int(const char *str, t_list **lst, char **splited)
 }
 
 /*
-	ソート済みチェック
+	Sorted Checks
 */
 int	is_sorted(t_list **list, ssize_t size)
 {
@@ -93,7 +93,7 @@ int	is_sorted(t_list **list, ssize_t size)
 }
 
 /*
-	スタックの大きさを取得する
+	Get stack size
 */
 ssize_t	get_stack_size(t_list **list)
 {
