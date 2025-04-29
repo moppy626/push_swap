@@ -33,3 +33,5 @@ fclean:
 	rm -f $(NAME) $(OBJS)
 
 re: fclean all
+
+.PHONY: all clean fclean re
