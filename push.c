@@ -13,7 +13,7 @@
 #include "push_swap.h"
 
 /*
-	pa・pb処理を実施します
+	Perform pa and pb processing
 */
 void	p(t_list **from, t_list **to)
 {
