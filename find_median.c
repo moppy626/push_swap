@@ -13,7 +13,7 @@
 #include "push_swap.h"
 
 /*
-	配列をソートする
+	Sorting Arrays
 */
 void	sort_median(int ary[], ssize_t from, ssize_t to)
 {
@@ -44,7 +44,7 @@ void	sort_median(int ary[], ssize_t from, ssize_t to)
 }
 
 /*
-	リストの中央値を取得
+	Get the median value of the list
 */
 int	find_median(t_data *data, t_list **list, ssize_t size)
 {
