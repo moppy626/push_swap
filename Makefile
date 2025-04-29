@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-CC = sudo cc -Wall -Wextra -Werror
+CC = cc -Wall -Wextra -Werror
 NAME = push_swap
 SRC = main.c push.c swap.c find_median.c set_lists.c check_args.c tools.c
 SRC_LIBFT = ft_memcpy.c ft_split.c
