@@ -6,14 +6,14 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 21:50:18 by mmachida          #+#    #+#             */
-/*   Updated: 2025/04/14 21:50:18 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/05/01 23:51:17 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 /*
-	Sorting Arrays
+	配列をソートする
 */
 void	sort_median(int ary[], ssize_t from, ssize_t to)
 {
@@ -44,7 +44,7 @@ void	sort_median(int ary[], ssize_t from, ssize_t to)
 }
 
 /*
-	Get the median value of the list
+	リストの中央値を取得
 */
 int	find_median(t_data *data, t_list **list, ssize_t size)
 {

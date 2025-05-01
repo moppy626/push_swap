@@ -6,14 +6,14 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 21:59:00 by mmachida          #+#    #+#             */
-/*   Updated: 2025/04/18 21:59:00 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/05/01 23:53:28 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 /*
-	Create a new bi-directional list structure
+	新しい双方向リストの構造体を作成する
 */
 t_list	*new_val(int val, t_list **list, char	**splited)
 {
@@ -31,7 +31,7 @@ t_list	*new_val(int val, t_list **list, char	**splited)
 }
 
 /*
-	Adds a value to the end of a bidirectional list
+	双方向リストの最後に値を追加する
 */
 void	add_back(t_list **lst, t_list *new, char **splited)
 {
@@ -57,7 +57,7 @@ void	add_back(t_list **lst, t_list *new, char **splited)
 }
 
 /*
-	Reads the number specified in the parameter
+	パラメタで指定された数字を読み込む
 */
 t_list	*read_args(int argc, char **argv)
 {
@@ -88,7 +88,7 @@ t_list	*read_args(int argc, char **argv)
 }
 
 /*
-	Set structure for data storage
+	データ保存用の構造体をセットする
 */
 void	set_data(int argc, char **argv, t_data *data)
 {

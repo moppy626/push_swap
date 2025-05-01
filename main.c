@@ -12,20 +12,44 @@
 
 #include "push_swap.h"
 
-/*
-	Insertation sort
-*/
-void	insertion_sort(t_data *data)
-{
-	ssize_t	idx;
-	ssize_t	moved;
+#include <stdio.h>
 
+void test(t_data *data)
+{
+	t_list *temp;
+
+	printf("a(%ld): ", data->a_size);
+	if (data->a)
+	{
+		temp = data->a;
+		t_list *start = temp;
+		do {
+			printf("%d ", temp->val);
+			temp = temp->next;
+		} while (temp != start);
+	}
+	printf("/ b(%ld): ", data->b_size);
+	if (data->b)
+	{
+		temp = data->b;
+		t_list *start = temp;
+		do {
+			printf("%d ", temp->val);
+			temp = temp->next;
+		} while (temp != start);
+	}
+	printf("\n");
+}
+
+/*
+	挿入ソート
+*/
+void	insertion_sort(t_data *data, ssize_t idx, ssize_t moved)
+{
 	if (!data->b)
 		return ;
-	idx = 0;
-	moved = 0;
-	idx += push(data, A);
-	moved++;
+	// idx += push(data, A);
+	// moved++;
 	while (data->b)
 	{
 		while (data->a != data->a->prev && idx != 0
@@ -44,7 +68,7 @@ void	insertion_sort(t_data *data)
 }
 
 /*
-	Sort the contents of the B stack
+	Bスタックの内容をソートする
 */
 void	sort_b(t_data *data)
 {
@@ -55,7 +79,7 @@ void	sort_b(t_data *data)
 	size = data->b_size;
 	if (size <= 20)
 	{
-		insertion_sort(data);
+		insertion_sort(data, 0, 0);
 		while (data->b)
 		{
 			push(data, A);
@@ -72,7 +96,7 @@ void	sort_b(t_data *data)
 }
 
 /*
-	Sort stacks of 3 or less in ascending order
+	3件以下のスタックを昇順にソートする
 */
 void	sort_under_three(t_data *data, ssize_t size)
 {
@@ -99,7 +123,25 @@ void	sort_under_three(t_data *data, ssize_t size)
 }
 
 /*
-	main function
+	5件以下のスタックを昇順にソートする
+*/
+void	sort_under_five(t_data *data)
+{
+	// printf("sort_under_five1 ");
+	// test(data);
+	while (data->a_size > 3)
+		push(data, B);
+	// printf("sort_under_five2 ");
+	// test(data);
+	sort_under_three(data, data->a_size);
+	// printf("sort_under_five3 ");
+	// test(data);
+	if (data->b_size > 0)
+		insertion_sort(data, 3, 3);
+}
+
+/*
+	メイン関数
 */
 int	main(int argc, char **argv)
 {
@@ -113,7 +155,7 @@ int	main(int argc, char **argv)
 	set_data(argc, argv, &data);
 	if (!is_sorted(&data.a, data.a_size))
 	{
-		if (data.a_size > 3)
+		if (data.a_size > 5)
 		{
 			size = data.a_size;
 			median = find_median(&data, &data.a, size);
@@ -124,8 +166,10 @@ int	main(int argc, char **argv)
 			sort_b(&data);
 		}
 		else
-			sort_under_three(&data, data.a_size);
+			sort_under_five(&data);
 	}
+	// test(&data);
 	free_list(&data.a);
 	free_list(&data.b);
+	//0 4 1 3 2が問題
 }

@@ -6,14 +6,14 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 21:52:21 by mmachida          #+#    #+#             */
-/*   Updated: 2025/04/18 21:52:21 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/05/01 23:52:43 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 /*
-	Perform pa and pb processing
+	pa・pb処理を実施します
 */
 void	p(t_list **from, t_list **to)
 {

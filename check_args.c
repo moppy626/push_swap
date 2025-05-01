@@ -6,14 +6,14 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 22:56:55 by mmachida          #+#    #+#             */
-/*   Updated: 2025/04/15 22:56:55 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/05/01 23:49:48 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 /*
-	Outputs an error message and terminates the process
+	エラーメッセージを出力して処理を終了する
 */
 void	error(char *msg, t_list **lst1, t_list **lst2, char **splited)
 {
@@ -28,7 +28,7 @@ void	error(char *msg, t_list **lst1, t_list **lst2, char **splited)
 }
 
 /*
-	Judging blanks
+	空白を判定する
 */
 int	is_space(char c)
 {
@@ -39,7 +39,7 @@ int	is_space(char c)
 }
 
 /*
-	Convert to int type
+	int型への変換を行う
 */
 int	to_int(const char *str, t_list **lst, char **splited)
 {
@@ -71,7 +71,7 @@ int	to_int(const char *str, t_list **lst, char **splited)
 }
 
 /*
-	Sorted Checks
+	ソート済みチェック
 */
 int	is_sorted(t_list **list, ssize_t size)
 {
@@ -93,7 +93,7 @@ int	is_sorted(t_list **list, ssize_t size)
 }
 
 /*
-	Get stack size
+	スタックの大きさを取得する
 */
 ssize_t	get_stack_size(t_list **list)
 {

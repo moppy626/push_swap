@@ -6,20 +6,20 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 22:01:54 by mmachida          #+#    #+#             */
-/*   Updated: 2025/04/18 22:01:54 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/05/01 23:54:32 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 /*
-	Perform ra and rb processing
+	ra・rb処理を実施します
 */
 int	r(t_list **list)
 {
 	t_list	*temp;
 
-	if (*list == (*list)->next)
+	if (!list || !*list || *list == (*list)->next)
 		return (0);
 	temp = (*list)->next;
 	*list = temp;
@@ -48,11 +48,13 @@ int	rotate(t_data *data, int mode)
 }
 
 /*
-	Perform sa and sb processing
+	sa・sb処理を実施します
 */
 void	swap(t_list **list, int mode)
 {
-	t_list	*temp;
+	t_list	*first;
+	t_list	*second;
+	t_list	*third;
 
 	if (*list == (*list)->next)
 		return ;
@@ -60,23 +62,20 @@ void	swap(t_list **list, int mode)
 		ft_printf("sa\n");
 	else
 		ft_printf("sb\n");
-	temp = (*list)->next;
-	if (temp->next == *list)
-	{
-		temp = (*list)->next;
-		*list = temp;
-		return ;
-	}
-	temp->prev = (*list)->prev;
-	(*list)->next = temp->next;
-	(*list)->prev = temp;
-	temp->next->prev = *list;
-	temp->next = *list;
-	*list = temp;
+	first = *list;
+	second = first->next;
+	third = second->next;
+	first->next  = third;
+	third->prev = first;
+	second->prev = first->prev;
+	first->prev->next = second;
+	second->next = first;
+	first->prev = second;
+	*list = second;
 }
 
 /*
-	Perform rra and rrb processing
+	rra・rrb処理を実施します
 */
 int	rr(t_list **list)
 {

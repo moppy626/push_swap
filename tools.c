@@ -6,14 +6,14 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 23:56:15 by mmachida          #+#    #+#             */
-/*   Updated: 2025/04/17 23:56:15 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/05/01 23:54:00 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 /*
-	Move data above and below the standard value to the B stack
+	基準値以上・以下のデータをBスタックに移動する
 */
 ssize_t	move_by_pivot(t_data *data, int ou, int ab, int pivot)
 {
@@ -44,7 +44,7 @@ ssize_t	move_by_pivot(t_data *data, int ou, int ab, int pivot)
 }
 
 /*
-	Free the return value of the split function
+	split関数の戻り値をfreeする
 */
 void	free_splited(char **splited)
 {
