@@ -6,7 +6,7 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 21:59:00 by mmachida          #+#    #+#             */
-/*   Updated: 2025/05/01 23:53:28 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/05/02 15:29:44 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_list	*read_args(int argc, char **argv)
 		j = 0;
 		splited = ft_split(argv[i++], ' ');
 		if (splited == NULL)
-			error("Faild in ft_split\n", &ret, NULL, splited);
+			error("Faild in ft_split\n", &ret, NULL, NULL);
 		while (splited[j])
 		{
 			new = new_val(to_int(splited[j++], &ret, splited), &ret, splited);

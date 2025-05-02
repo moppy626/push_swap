@@ -44,12 +44,15 @@ void test(t_data *data)
 /*
 	挿入ソート
 */
-void	insertion_sort(t_data *data, ssize_t idx, ssize_t moved)
+void	insertion_sort(t_data *data)
 {
+	ssize_t idx;
+	ssize_t moved;
+
 	if (!data->b)
 		return ;
-	// idx += push(data, A);
-	// moved++;
+	idx = 0;
+	moved = 0;
 	while (data->b)
 	{
 		while (data->a != data->a->prev && idx != 0
@@ -79,7 +82,7 @@ void	sort_b(t_data *data)
 	size = data->b_size;
 	if (size <= 20)
 	{
-		insertion_sort(data, 0, 0);
+		insertion_sort(data);
 		while (data->b)
 		{
 			push(data, A);
@@ -121,23 +124,59 @@ void	sort_under_three(t_data *data, ssize_t size)
 		return ;
 	}
 }
-
-/*
-	5件以下のスタックを昇順にソートする
-*/
-void	sort_under_five(t_data *data)
+int	get_min_idx(t_list *list, ssize_t size)
 {
-	// printf("sort_under_five1 ");
-	// test(data);
+	t_list		*temp;
+	int		min;
+	int		min_idx;
+	int		idx;
+
+	if (!list)
+		return 0;
+	min = INT_MAX;
+	idx = 0;
+	temp = list;
+	while (idx < size)
+	{
+		if (temp->val < min)
+		{
+			min = temp->val;
+			min_idx = idx;
+		}
+		temp = temp->next;
+		idx++;
+	}
+	if (min_idx > size / 2)
+		return (min_idx - size);
+	else
+		return (min_idx);
+}
+/*
+	6件以下のスタックを昇順にソートする
+*/
+void	sort_under_six(t_data *data)
+{
+	int	min_idx;
+
 	while (data->a_size > 3)
+	{
+		min_idx = get_min_idx(data->a, (int)data->a_size);
+		while(min_idx != 0)
+			if(min_idx < 0)
+			{
+				reverse_rotate(data, A);
+				min_idx++;
+			}
+			else
+			{
+				rotate(data, A);
+				min_idx--;
+			}
 		push(data, B);
-	// printf("sort_under_five2 ");
-	// test(data);
+	}
 	sort_under_three(data, data->a_size);
-	// printf("sort_under_five3 ");
-	// test(data);
-	if (data->b_size > 0)
-		insertion_sort(data, 3, 3);
+	while(data->b)
+		push(data, A);
 }
 
 /*
@@ -155,7 +194,7 @@ int	main(int argc, char **argv)
 	set_data(argc, argv, &data);
 	if (!is_sorted(&data.a, data.a_size))
 	{
-		if (data.a_size > 5)
+		if (data.a_size > 6)
 		{
 			size = data.a_size;
 			median = find_median(&data, &data.a, size);
@@ -166,7 +205,7 @@ int	main(int argc, char **argv)
 			sort_b(&data);
 		}
 		else
-			sort_under_five(&data);
+			sort_under_six(&data);
 	}
 	// test(&data);
 	free_list(&data.a);

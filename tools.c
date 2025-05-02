@@ -6,11 +6,26 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 23:56:15 by mmachida          #+#    #+#             */
-/*   Updated: 2025/05/01 23:54:00 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/05/02 17:19:31 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+/*
+	エラーメッセージを出力して処理を終了する
+*/
+void	error(char *msg, t_list **lst1, t_list **lst2, char **splited)
+{
+	ft_printf("Error\n %s", msg);
+	if (lst1)
+		free_list(lst1);
+	if (lst2)
+		free_list(lst2);
+	if (splited)
+		free_splited(splited);
+	exit (EXIT_FAILURE);
+}
 
 /*
 	基準値以上・以下のデータをBスタックに移動する

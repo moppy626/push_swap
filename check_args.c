@@ -6,26 +6,11 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 22:56:55 by mmachida          #+#    #+#             */
-/*   Updated: 2025/05/01 23:49:48 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/05/02 18:00:03 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-/*
-	エラーメッセージを出力して処理を終了する
-*/
-void	error(char *msg, t_list **lst1, t_list **lst2, char **splited)
-{
-	ft_printf("Error\n %s", msg);
-	if (lst1)
-		free_list(lst1);
-	if (lst2)
-		free_list(lst2);
-	if (splited)
-		free_splited(splited);
-	exit (EXIT_FAILURE);
-}
 
 /*
 	空白を判定する
@@ -45,29 +30,37 @@ int	to_int(const char *str, t_list **lst, char **splited)
 {
 	long	ret;
 	int		i;
-	int		fugou;
+	int		sign;
+	int		point_flg;
 
 	i = 0;
 	while (is_space((char)str[i]))
 		i++;
-	fugou = 1;
+	sign = 1;
 	if (str[i] == '-' || str[i] == '+')
 		if (str[i++] == '-')
-			fugou = -1;
+			sign = -1;
+	ret = 0;
 	if (!('0' <= str[i] && str[i] <= '9'))
 		error("Argument must be number\n", lst, NULL, splited);
-	ret = 0;
-	while (str[i] && str[i] != '.')
+	point_flg = 0;
+	while (str[i])
 	{	
-		if (!('0' <= str[i] && str[i] <= '9'))
+		if (point_flg == 0 && str[i] == '.')
+			point_flg = 1;
+		else if (!('0' <= str[i] && str[i] <= '9'))
 			error("Argument must be number\n", lst, NULL, splited);
-		else if ((fugou < 0) && (fugou * ret < (INT_MIN + (str[i] - '0')) / 10))
-			error("Out of int range\n", lst, NULL, splited);
-		else if ((fugou >= 0) && (ret > (INT_MAX - (str[i] - '0')) / 10))
-			error("Out of int range\n", lst, NULL, splited);
-		ret = (ret * 10) + (str[i++] - '0');
+		if(point_flg == 0)
+		{
+			if ((sign < 0) && (sign * ret < (INT_MIN + (str[i] - '0')) / 10))
+				error("Out of int range\n", lst, NULL, splited);
+			else if ((sign >= 0) && (ret > (INT_MAX - (str[i] - '0')) / 10))
+				error("Out of int range\n", lst, NULL, splited);
+			ret = (ret * 10) + (str[i] - '0');
+		}
+		i++;
 	}
-	return (fugou * ret);
+	return (sign * ret);
 }
 
 /*
