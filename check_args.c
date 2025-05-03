@@ -6,7 +6,7 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 22:56:55 by mmachida          #+#    #+#             */
-/*   Updated: 2025/05/02 18:00:03 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/05/03 17:40:48 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	to_int(const char *str, t_list **lst, char **splited)
 	long	ret;
 	int		i;
 	int		sign;
-	int		point_flg;
 
 	i = 0;
 	while (is_space((char)str[i]))
@@ -42,23 +41,16 @@ int	to_int(const char *str, t_list **lst, char **splited)
 			sign = -1;
 	ret = 0;
 	if (!('0' <= str[i] && str[i] <= '9'))
-		error("Argument must be number\n", lst, NULL, splited);
-	point_flg = 0;
+		error("Argument must be Integer\n", lst, NULL, splited);
 	while (str[i])
 	{	
-		if (point_flg == 0 && str[i] == '.')
-			point_flg = 1;
-		else if (!('0' <= str[i] && str[i] <= '9'))
-			error("Argument must be number\n", lst, NULL, splited);
-		if(point_flg == 0)
-		{
-			if ((sign < 0) && (sign * ret < (INT_MIN + (str[i] - '0')) / 10))
-				error("Out of int range\n", lst, NULL, splited);
-			else if ((sign >= 0) && (ret > (INT_MAX - (str[i] - '0')) / 10))
-				error("Out of int range\n", lst, NULL, splited);
-			ret = (ret * 10) + (str[i] - '0');
-		}
-		i++;
+		if (!('0' <= str[i] && str[i] <= '9'))
+			error("Argument must be Integer\n", lst, NULL, splited);
+		else if ((sign < 0) && (sign * ret < (INT_MIN + (str[i] - '0')) / 10))
+			error("Out of int range\n", lst, NULL, splited);
+		else if ((sign >= 0) && (ret > (INT_MAX - (str[i] - '0')) / 10))
+			error("Out of int range\n", lst, NULL, splited);
+		ret = (ret * 10) + (str[i++] - '0');
 	}
 	return (sign * ret);
 }
