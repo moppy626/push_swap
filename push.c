@@ -6,7 +6,7 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 21:52:21 by mmachida          #+#    #+#             */
-/*   Updated: 2025/05/01 23:52:43 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/05/03 18:39:02 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,14 @@ int	push(t_data *data, int mode)
 		p(&data->b, &data->a);
 		data->a_size++;
 		data->b_size--;
-		ft_printf("pa\n");
+		write(1, "pa\n", 3);
 	}
 	else
 	{
 		p(&data->a, &data->b);
 		data->b_size++;
 		data->a_size--;
-		ft_printf("pb\n");
+		write(1, "pb\n", 3);
 	}
 	return (1);
 }

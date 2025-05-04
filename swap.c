@@ -6,7 +6,7 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 22:01:54 by mmachida          #+#    #+#             */
-/*   Updated: 2025/05/01 23:54:32 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/05/03 18:40:29 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,17 @@ int	rotate(t_data *data, int mode)
 {
 	if (mode == A)
 	{
-		ft_printf("ra\n");
+		write(1, "ra\n", 3);
 		return (r(&data->a));
 	}
 	else if (mode == B)
 	{
-		ft_printf("rb\n");
+		write(1, "rb\n", 3);
 		return (r(&data->b));
 	}
 	else
 	{
-		ft_printf("rr\n");
+		write(1, "rr\n", 3);
 		r(&data->a);
 		r(&data->b);
 	}
@@ -59,9 +59,9 @@ void	swap(t_list **list, int mode)
 	if (*list == (*list)->next)
 		return ;
 	if (mode == A)
-		ft_printf("sa\n");
+		write(1, "sa\n", 3);
 	else
-		ft_printf("sb\n");
+		write(1, "sb\n", 3);
 	first = *list;
 	second = first->next;
 	third = second->next;
@@ -92,17 +92,17 @@ int	reverse_rotate(t_data *data, int mode)
 {
 	if (mode == A)
 	{
-		ft_printf("rra\n");
+		write(1, "rra\n", 4);
 		return (rr(&data->a));
 	}
 	else if (mode == B)
 	{
-		ft_printf("rrb\n");
+		write(1, "rrb\n", 4);
 		return (rr(&data->b));
 	}
 	else
 	{
-		ft_printf("rrr\n");
+		write(1, "rrr\n", 4);
 		rr(&data->a);
 		rr(&data->b);
 	}

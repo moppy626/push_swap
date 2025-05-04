@@ -6,7 +6,7 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 23:56:15 by mmachida          #+#    #+#             */
-/*   Updated: 2025/05/02 17:19:31 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/05/04 15:13:59 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,11 @@
 */
 void	error(char *msg, t_list **lst1, t_list **lst2, char **splited)
 {
-	ft_printf("Error\n %s", msg);
+	ssize_t len;
+
+	len = ft_strlen(msg);
+	write(2, "Error\n", 6);
+	write(2, msg, len);
 	if (lst1)
 		free_list(lst1);
 	if (lst2)

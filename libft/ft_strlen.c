@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_funcs.c                                        :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmachida <mmachida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 08:55:06 by mmachida          #+#    #+#             */
-/*   Updated: 2024/08/14 14:10:06 by mmachida         ###   ########.fr       */
+/*   Updated: 2024/06/17 21:38:02 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-void	print_str(char *s, long size)
+size_t	ft_strlen(const char *s)
 {
-	int	i;
+	size_t	len;
 
-	if (!s)
-		return ;
-	i = 0;
-	while (i < size)
-	{
-		write(1, &s[i], 1);
-		i++;
-	}
+	len = 0;
+	while (s[len])
+		len++;
+	return (len);
 }
