@@ -6,7 +6,7 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 22:56:55 by mmachida          #+#    #+#             */
-/*   Updated: 2025/05/03 17:40:48 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:35:46 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ int	to_int(const char *str, t_list **lst, char **splited)
 /*
 	ソート済みチェック
 */
-int	is_sorted(t_list **list, ssize_t size)
+int	is_sorted(t_list **list, int size)
 {
-	ssize_t	idx;
+	int	idx;
 	t_list	*temp;
 
 	if (!*list)
@@ -78,21 +78,56 @@ int	is_sorted(t_list **list, ssize_t size)
 }
 
 /*
-	スタックの大きさを取得する
+	リストから指定した箇所のポインタを取得する
 */
-ssize_t	get_stack_size(t_list **list)
+t_list	*get_idx(t_list **list, int get_idx)
 {
 	t_list	*temp;
-	int		ret;
+	int	idx;
 
-	if (!*list)
-		return (0);
-	ret = 0;
+	idx = 0;
 	temp = *list;
-	while (temp->next != *list)
+	while (get_idx != idx)
 	{
-		ret++;
-		temp = temp->next;
+		if (get_idx < 0)
+		{
+			temp = temp->prev;
+			idx--;
+		}
+		else
+		{
+			temp = temp->next;
+			idx++;
+		}
 	}
-	return (++ret);
+	return (temp);
+}
+
+/*
+	ソート済みで先頭が最小でない場合、
+	先頭を最小に合わせる
+*/
+int	rotate_sorted(t_data *data)
+{
+	int		min_idx;
+	t_list	*temp;
+
+	min_idx = get_min_idx(data->a, data->a_size);
+	temp = get_idx(&data->a, min_idx);
+	if (!is_sorted(&temp, data->a_size))
+		return (0);
+	while (min_idx != 0)
+	{
+		if (min_idx < 0)
+		{
+			reverse_rotate(data, A);
+			min_idx++;
+		}
+		else
+		{
+			rotate(data, A);
+			min_idx--;
+		}
+	}
+	return (1);
 }

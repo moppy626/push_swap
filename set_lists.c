@@ -6,7 +6,7 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 21:59:00 by mmachida          #+#    #+#             */
-/*   Updated: 2025/05/02 15:29:44 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:35:46 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void	add_back(t_list **lst, t_list *new, char **splited)
 */
 t_list	*read_args(int argc, char **argv)
 {
-	ssize_t	i;
-	ssize_t	j;
+	int	i;
+	int	j;
 	t_list	*ret;
 	t_list	*new;
 	char	**splited;
@@ -96,4 +96,24 @@ void	set_data(int argc, char **argv, t_data *data)
 	data->a_size = get_stack_size(&data->a);
 	data->b = NULL;
 	data->b_size = 0;
+}
+
+/*
+	スタックの大きさを取得する
+*/
+int	get_stack_size(t_list **list)
+{
+	t_list	*temp;
+	int		ret;
+
+	if (!*list)
+		return (0);
+	ret = 0;
+	temp = *list;
+	while (temp->next != *list)
+	{
+		ret++;
+		temp = temp->next;
+	}
+	return (++ret);
 }

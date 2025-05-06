@@ -6,7 +6,7 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 22:01:54 by mmachida          #+#    #+#             */
-/*   Updated: 2025/05/03 18:40:29 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:32:18 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	swap(t_list **list, int mode)
 	first = *list;
 	second = first->next;
 	third = second->next;
-	first->next  = third;
+	first->next = third;
 	third->prev = first;
 	second->prev = first->prev;
 	first->prev->next = second;

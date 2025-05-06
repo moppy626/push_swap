@@ -31,23 +31,26 @@ typedef struct s_list{
 
 typedef struct s_data{
 	struct s_list	*a;
-	ssize_t			a_size;
+	int			a_size;
 	struct s_list	*b;
-	ssize_t			b_size;
+	int			b_size;
 }	t_data;
 int		rotate(t_data *data, int mode);
 void	swap(t_list **list, int mode);
 int		reverse_rotate(t_data *data, int mode);
 int		push(t_data *data, int mode);
-int		find_median(t_data *data, t_list **list, ssize_t size);
+int		find_median(t_data *data, t_list **list, int size);
 void	free_list(t_list **list);
 t_list	*read_args(int argc, char **argv);
 void	error(char *msg, t_list **lst1, t_list **lst2, char **splited);
-int		is_sorted(t_list **list, ssize_t size);
-ssize_t	get_stack_size(t_list **list);
+int		is_sorted(t_list **list, int size);
+int	get_stack_size(t_list **list);
 int		to_int(const char *str, t_list **lst, char **splited);
 void	free_splited(char **splited);
-ssize_t	move_by_pivot(t_data *data, int ou, int ab, int pivot);
+int	move_by_pivot(t_data *data, int ou, int ab, int pivot);
 void	set_data(int argc, char **argv, t_data *data);
+int		rotate_sorted(t_data *data);
+int		get_min_idx(t_list *list, int size);
+int	get_stack_size(t_list **list);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 08:42:45 by user42            #+#    #+#             */
-/*   Updated: 2025/05/02 16:18:44 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:35:12 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char			**getmem(char const *s, char c);
 static size_t	copy(char *s, char c, char **ret, size_t idx);
 
-void	free_data(char **splited)
+void	*free_data(char **splited)
 {
 	int	i;
 
@@ -23,6 +23,7 @@ void	free_data(char **splited)
 	while (splited[i])
 		free(splited[i++]);
 	free(splited);
+	return (NULL);
 }
 
 char	**ft_split(char const *s, char c)
@@ -43,10 +44,7 @@ char	**ft_split(char const *s, char c)
 	{
 		len = copy((char *)&s[start], c, ret, idx++);
 		if (len == (size_t)(-1))
-		{
-			free_data(ret);
-			return (NULL);
-		}
+			return (free_data(ret));
 		start += len;
 		if (c != '\0')
 			while (s[start] == c)

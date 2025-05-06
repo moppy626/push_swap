@@ -6,7 +6,7 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 21:50:18 by mmachida          #+#    #+#             */
-/*   Updated: 2025/05/01 23:51:17 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:35:46 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 /*
 	配列をソートする
 */
-void	sort_median(int ary[], ssize_t from, ssize_t to)
+void	sort_median(int ary[], int from, int to)
 {
-	ssize_t	low;
-	ssize_t	high;
+	int	low;
+	int	high;
 	int		temp;
 
 	if (from >= to)
@@ -46,10 +46,10 @@ void	sort_median(int ary[], ssize_t from, ssize_t to)
 /*
 	リストの中央値を取得
 */
-int	find_median(t_data *data, t_list **list, ssize_t size)
+int	find_median(t_data *data, t_list **list, int size)
 {
 	t_list	*temp;
-	ssize_t	idx;
+	int	idx;
 	int		*ary;
 
 	if (!*list || size <= 0)

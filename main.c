@@ -12,42 +12,13 @@
 
 #include "push_swap.h"
 
-#include <stdio.h>
-
-void test(t_data *data)
-{
-	t_list *temp;
-
-	printf("a(%ld): ", data->a_size);
-	if (data->a)
-	{
-		temp = data->a;
-		t_list *start = temp;
-		do {
-			printf("%d ", temp->val);
-			temp = temp->next;
-		} while (temp != start);
-	}
-	printf("/ b(%ld): ", data->b_size);
-	if (data->b)
-	{
-		temp = data->b;
-		t_list *start = temp;
-		do {
-			printf("%d ", temp->val);
-			temp = temp->next;
-		} while (temp != start);
-	}
-	printf("\n");
-}
-
 /*
 	挿入ソート
 */
 void	insertion_sort(t_data *data)
 {
-	ssize_t idx;
-	ssize_t moved;
+	int	idx;
+	int	moved;
 
 	if (!data->b)
 		return ;
@@ -75,8 +46,8 @@ void	insertion_sort(t_data *data)
 */
 void	sort_b(t_data *data)
 {
-	ssize_t	size;
-	ssize_t	save;
+	int	size;
+	int	save;
 	int		median;
 
 	size = data->b_size;
@@ -101,7 +72,7 @@ void	sort_b(t_data *data)
 /*
 	3件以下のスタックを昇順にソートする
 */
-void	sort_under_three(t_data *data, ssize_t size)
+void	sort_under_three(t_data *data, int size)
 {
 	if (size <= 1)
 		return ;
@@ -124,33 +95,7 @@ void	sort_under_three(t_data *data, ssize_t size)
 		return ;
 	}
 }
-int	get_min_idx(t_list *list, ssize_t size)
-{
-	t_list		*temp;
-	int		min;
-	int		min_idx;
-	int		idx;
 
-	if (!list)
-		return 0;
-	min = INT_MAX;
-	idx = 0;
-	temp = list;
-	while (idx < size)
-	{
-		if (temp->val < min)
-		{
-			min = temp->val;
-			min_idx = idx;
-		}
-		temp = temp->next;
-		idx++;
-	}
-	if (min_idx > size / 2)
-		return (min_idx - size);
-	else
-		return (min_idx);
-}
 /*
 	6件以下のスタックを昇順にソートする
 */
@@ -160,9 +105,10 @@ void	sort_under_six(t_data *data)
 
 	while (data->a_size > 3)
 	{
-		min_idx = get_min_idx(data->a, (int)data->a_size);
-		while(min_idx != 0)
-			if(min_idx < 0)
+		min_idx = get_min_idx(data->a, data->a_size);
+		while (min_idx != 0)
+		{
+			if (min_idx < 0)
 			{
 				reverse_rotate(data, A);
 				min_idx++;
@@ -172,10 +118,11 @@ void	sort_under_six(t_data *data)
 				rotate(data, A);
 				min_idx--;
 			}
+		}
 		push(data, B);
 	}
 	sort_under_three(data, data->a_size);
-	while(data->b)
+	while (data->b)
 		push(data, A);
 }
 
@@ -186,13 +133,13 @@ int	main(int argc, char **argv)
 {
 	t_data	data;
 	int		median;
-	ssize_t	save;
-	ssize_t	size;
+	int	save;
+	int	size;
 
 	if (argc <= 1)
 		return (0);
 	set_data(argc, argv, &data);
-	if (!is_sorted(&data.a, data.a_size))
+	if (!rotate_sorted(&data))
 	{
 		if (data.a_size > 6)
 		{
@@ -207,8 +154,6 @@ int	main(int argc, char **argv)
 		else
 			sort_under_six(&data);
 	}
-	// test(&data);
 	free_list(&data.a);
 	free_list(&data.b);
-	//0 4 1 3 2が問題
 }

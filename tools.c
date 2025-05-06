@@ -6,7 +6,7 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 23:56:15 by mmachida          #+#    #+#             */
-/*   Updated: 2025/05/04 15:13:59 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/05/06 11:35:46 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 */
 void	error(char *msg, t_list **lst1, t_list **lst2, char **splited)
 {
-	ssize_t len;
+	int	len;
 
 	len = ft_strlen(msg);
 	write(2, "Error\n", 6);
@@ -34,11 +34,11 @@ void	error(char *msg, t_list **lst1, t_list **lst2, char **splited)
 /*
 	基準値以上・以下のデータをBスタックに移動する
 */
-ssize_t	move_by_pivot(t_data *data, int ou, int ab, int pivot)
+int	move_by_pivot(t_data *data, int ou, int ab, int pivot)
 {
-	ssize_t	size;
+	int	size;
 	int		idx;
-	ssize_t	ret;
+	int	ret;
 
 	idx = 0;
 	ret = 0;
@@ -93,4 +93,35 @@ void	free_list(t_list **list)
 		free(tmp);
 	}
 	free(last);
+}
+
+/*
+	リスト内での最小値のインデックスを取得する
+*/
+int	get_min_idx(t_list *list, int size)
+{
+	t_list	*temp;
+	int		min;
+	int		min_idx;
+	int		idx;
+
+	if (!list)
+		return (0);
+	min = INT_MAX;
+	idx = 0;
+	temp = list;
+	while (idx < size)
+	{
+		if (temp->val < min)
+		{
+			min = temp->val;
+			min_idx = idx;
+		}
+		temp = temp->next;
+		idx++;
+	}
+	if (min_idx > size / 2)
+		return (min_idx - size);
+	else
+		return (min_idx);
 }
