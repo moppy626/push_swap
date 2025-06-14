@@ -6,7 +6,7 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 22:51:36 by mmachida          #+#    #+#             */
-/*   Updated: 2025/04/28 23:53:47 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/06/14 23:38:08 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	sort_b(t_data *data)
 {
 	int	size;
 	int	save;
-	int		median;
+	int	median;
 
 	size = data->b_size;
 	if (size <= 20)
@@ -133,8 +133,8 @@ int	main(int argc, char **argv)
 {
 	t_data	data;
 	int		median;
-	int	save;
-	int	size;
+	int		save;
+	int		size;
 
 	if (argc <= 1)
 		return (0);

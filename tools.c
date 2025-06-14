@@ -6,7 +6,7 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 23:56:15 by mmachida          #+#    #+#             */
-/*   Updated: 2025/05/06 11:35:46 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/06/14 23:41:44 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	error(char *msg, t_list **lst1, t_list **lst2, char **splited)
 int	move_by_pivot(t_data *data, int ou, int ab, int pivot)
 {
 	int	size;
-	int		idx;
+	int	idx;
 	int	ret;
 
 	idx = 0;

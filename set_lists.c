@@ -6,7 +6,7 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 21:59:00 by mmachida          #+#    #+#             */
-/*   Updated: 2025/05/06 11:35:46 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/06/14 23:39:56 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ t_list	*new_val(int val, t_list **list, char	**splited)
 
 	new = malloc(sizeof(t_list));
 	if (!new)
-	{
 		error("malloc error\n", list, NULL, splited);
-	}	
 	new->val = val;
 	new->prev = NULL;
 	new->next = NULL;
@@ -61,8 +59,8 @@ void	add_back(t_list **lst, t_list *new, char **splited)
 */
 t_list	*read_args(int argc, char **argv)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	t_list	*ret;
 	t_list	*new;
 	char	**splited;

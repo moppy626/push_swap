@@ -6,7 +6,7 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 21:50:18 by mmachida          #+#    #+#             */
-/*   Updated: 2025/05/06 11:35:46 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/06/14 23:39:04 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	sort_median(int ary[], int from, int to)
 {
 	int	low;
 	int	high;
-	int		temp;
+	int	temp;
 
 	if (from >= to)
 		return ;
@@ -49,7 +49,7 @@ void	sort_median(int ary[], int from, int to)
 int	find_median(t_data *data, t_list **list, int size)
 {
 	t_list	*temp;
-	int	idx;
+	int		idx;
 	int		*ary;
 
 	if (!*list || size <= 0)

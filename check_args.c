@@ -6,7 +6,7 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 22:56:55 by mmachida          #+#    #+#             */
-/*   Updated: 2025/05/06 11:35:46 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/06/14 23:37:36 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	to_int(const char *str, t_list **lst, char **splited)
 	if (!('0' <= str[i] && str[i] <= '9'))
 		error("Argument must be Integer\n", lst, NULL, splited);
 	while (str[i])
-	{	
+	{
 		if (!('0' <= str[i] && str[i] <= '9'))
 			error("Argument must be Integer\n", lst, NULL, splited);
 		else if ((sign < 0) && (sign * ret < (INT_MIN + (str[i] - '0')) / 10))
@@ -60,7 +60,7 @@ int	to_int(const char *str, t_list **lst, char **splited)
 */
 int	is_sorted(t_list **list, int size)
 {
-	int	idx;
+	int		idx;
 	t_list	*temp;
 
 	if (!*list)
@@ -83,7 +83,7 @@ int	is_sorted(t_list **list, int size)
 t_list	*get_idx(t_list **list, int get_idx)
 {
 	t_list	*temp;
-	int	idx;
+	int		idx;
 
 	idx = 0;
 	temp = *list;
