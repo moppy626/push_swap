@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_lists.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: mmachida <mmachida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 21:59:00 by mmachida          #+#    #+#             */
-/*   Updated: 2025/06/14 23:39:56 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/06/22 17:54:04 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,25 +60,32 @@ void	add_back(t_list **lst, t_list *new, char **splited)
 t_list	*read_args(int argc, char **argv)
 {
 	int		i;
-	int		j;
 	t_list	*ret;
 	t_list	*new;
 	char	**splited;
 
-	i = 1;
 	ret = NULL;
-	while (i < argc)
+	if (argc == 2)
 	{
-		j = 0;
-		splited = ft_split(argv[i++], ' ');
+		i = 0;
+		splited = ft_split(argv[1], ' ');
 		if (splited == NULL)
 			error("Faild in ft_split\n", &ret, NULL, NULL);
-		while (splited[j])
+		while (splited[i])
 		{
-			new = new_val(to_int(splited[j++], &ret, splited), &ret, splited);
+			new = new_val(to_int(splited[i++], &ret, splited), &ret, splited);
 			add_back(&ret, new, splited);
 		}
 		free_splited(splited);
+	}
+	else
+	{
+		i = 1;
+		while (i < argc)
+		{
+			new = new_val(to_int(argv[i++], &ret, NULL), &ret, NULL);
+			add_back(&ret, new, NULL);
+		}
 	}
 	ret->prev = new;
 	new->next = ret;
