@@ -6,7 +6,7 @@
 /*   By: mmachida <mmachida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 21:59:00 by mmachida          #+#    #+#             */
-/*   Updated: 2025/06/28 16:01:17 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/06/28 16:07:50 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ t_list	*set_list(char *target, t_list **ret, char **splited)
 	add_back(ret, new, splited);
 	return (new);
 }
+
 /*
 	パラメタで指定された数字を読み込む
 */
@@ -107,4 +108,3 @@ void	set_data(int argc, char **argv, t_data *data)
 	data->b = NULL;
 	data->b_size = 0;
 }
-
