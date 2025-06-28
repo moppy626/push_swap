@@ -6,7 +6,7 @@
 /*   By: mmachida <mmachida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 21:59:00 by mmachida          #+#    #+#             */
-/*   Updated: 2025/06/22 17:54:04 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/06/28 16:01:17 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,26 @@ void	add_back(t_list **lst, t_list *new, char **splited)
 		temp = *lst;
 		while (temp->next != NULL)
 		{
-			temp = temp->next;
 			if (temp->val == new->val)
 				error("Some arguments are duplicates\n", lst, NULL, splited);
+			temp = temp->next;
 		}
+		if (temp->val == new->val)
+			error("Some arguments are duplicates\n", lst, NULL, splited);
 		temp->next = new;
 		new->prev = temp;
 	}
 }
 
+t_list	*set_list(char *target, t_list **ret, char **splited)
+{
+	t_list	*new;
+
+	new = NULL;
+	new = new_val(to_int(target, ret, splited), ret, splited);
+	add_back(ret, new, splited);
+	return (new);
+}
 /*
 	パラメタで指定された数字を読み込む
 */
@@ -72,20 +83,14 @@ t_list	*read_args(int argc, char **argv)
 		if (splited == NULL)
 			error("Faild in ft_split\n", &ret, NULL, NULL);
 		while (splited[i])
-		{
-			new = new_val(to_int(splited[i++], &ret, splited), &ret, splited);
-			add_back(&ret, new, splited);
-		}
+			new = set_list(splited[i++], &ret, splited);
 		free_splited(splited);
 	}
 	else
 	{
 		i = 1;
 		while (i < argc)
-		{
-			new = new_val(to_int(argv[i++], &ret, NULL), &ret, NULL);
-			add_back(&ret, new, NULL);
-		}
+			new = set_list(argv[i++], &ret, NULL);
 	}
 	ret->prev = new;
 	new->next = ret;
@@ -103,22 +108,3 @@ void	set_data(int argc, char **argv, t_data *data)
 	data->b_size = 0;
 }
 
-/*
-	スタックの大きさを取得する
-*/
-int	get_stack_size(t_list **list)
-{
-	t_list	*temp;
-	int		ret;
-
-	if (!*list)
-		return (0);
-	ret = 0;
-	temp = *list;
-	while (temp->next != *list)
-	{
-		ret++;
-		temp = temp->next;
-	}
-	return (++ret);
-}

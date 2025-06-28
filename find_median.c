@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_median.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: mmachida <mmachida@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 21:50:18 by mmachida          #+#    #+#             */
-/*   Updated: 2025/06/14 23:39:04 by mmachida         ###   ########.fr       */
+/*   Updated: 2025/06/28 14:52:01 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,24 @@ int	find_median(t_data *data, t_list **list, int size)
 	idx = ary[size / 2];
 	free(ary);
 	return (idx);
+}
+
+/*
+	スタックの大きさを取得する
+*/
+int	get_stack_size(t_list **list)
+{
+	t_list	*temp;
+	int		ret;
+
+	if (!*list)
+		return (0);
+	ret = 0;
+	temp = *list;
+	while (temp->next != *list)
+	{
+		ret++;
+		temp = temp->next;
+	}
+	return (++ret);
 }
