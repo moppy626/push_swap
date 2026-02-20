@@ -6,7 +6,7 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 23:56:15 by mmachida          #+#    #+#             */
-/*   Updated: 2025/06/14 23:41:44 by mmachida         ###   ########.fr       */
+/*   Updated: 2026/02/20 21:04:21 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,15 +101,16 @@ void	free_list(t_list **list)
 int	get_min_idx(t_list *list, int size)
 {
 	t_list	*temp;
-	int		min;
+	long	min;
 	int		min_idx;
 	int		idx;
 
 	if (!list)
 		return (0);
-	min = INT_MAX;
 	idx = 0;
+	min_idx = 0;
 	temp = list;
+	min = temp->val;
 	while (idx < size)
 	{
 		if (temp->val < min)

@@ -6,7 +6,7 @@
 /*   By: mmachida <mmachida@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 22:56:55 by mmachida          #+#    #+#             */
-/*   Updated: 2025/06/14 23:37:36 by mmachida         ###   ########.fr       */
+/*   Updated: 2026/02/20 21:10:16 by mmachida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int	is_sorted(t_list **list, int size)
 
 	if (!*list)
 		return (0);
+	if (size <= 1)
+		return (1);
 	idx = 0;
 	temp = *list;
 	while (idx < size - 1)
